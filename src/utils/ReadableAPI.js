@@ -9,7 +9,17 @@ const headers = {
   Authorization: token
 };
 
-export const getAll = () =>
+export const getAllPosts = () =>
   fetch(`${api}/posts`, { headers })
+    .then(res => res.json())
+    .then(data => console.log(data))
+
+export const getCategories = () =>
+  fetch(`${api}/categories`, { headers })
+    .then(res => res.json())
+    .then(data => console.log(data))
+
+export const addPost = () =>
+  fetch(`${api}/post`, {method:'Post', headers })
     .then(res => res.json())
     .then(data => console.log(data))

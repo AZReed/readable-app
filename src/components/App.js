@@ -4,7 +4,7 @@ import * as ReadableAPI from "../utils/ReadableAPI";
 
 class App extends Component {
   render() {
-    ReadableAPI.getAll()
+    ReadableAPI.getCategories()
     return (
       <div>
         <Home />
