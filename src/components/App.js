@@ -1,16 +1,20 @@
 import React, { Component } from "react";
-import Home from "./Home";
-import * as ReadableAPI from "../utils/ReadableAPI";
+import Posts from "./Posts";
+import Categories from "./Categories";
+import { Container } from "semantic-ui-react";
+import { Route } from "react-router-dom";
 
 class App extends Component {
   render() {
-    ReadableAPI.getCategories()
     return (
-      <div>
-        <Home />
-      </div>
+      <Container>
+        <Route exact path="/" render={() => <Posts />} />
+        <Route exact path="/categories" render={() => <Categories />} />
+      </Container>
     );
   }
 }
+
+/* strictType */
 
 export default App;
