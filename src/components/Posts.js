@@ -8,17 +8,16 @@ class Posts extends Component {
   };
 
   componentDidMount() {
-    const posts = ReadableAPI.getAllPosts().then(posts =>
+    ReadableAPI.getAllPosts().then(posts =>
       this.setState({ posts })
     );
-    // this.setState( {posts} )
   }
 
   render() {
     return (
       <Item.Group>
         {this.state.posts.map( post => (
-          <Item>
+          <Item key={post.id}>
             <Item.Content>
               <Item.Header>
                 {post.id}
