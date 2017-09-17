@@ -1,10 +1,10 @@
-import { SELECT_POSTS } from "../actions";
+import { SET_POSTS } from "../actions";
 import { combineReducers } from 'redux'
 
 function posts(state = {}, action) {
+  console.log('posts in reducers', action.posts)
   switch (action.type) {
-    case SELECT_POSTS:
-      console.log(action)
+    case SET_POSTS:
       return action.posts
 
     default:

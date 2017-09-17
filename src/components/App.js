@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import Posts from "./Posts";
 import Categories from "./Categories";
-import { connect } from 'react-redux'
-import { selectPosts } from "../actions";
+import { connect } from "react-redux";
+import { setPosts } from "../actions";
 import { Container } from "semantic-ui-react";
 import { Route } from "react-router-dom";
 import * as ReadableAPI from "../utils/ReadableAPI";
 
 class App extends Component {
-
-  state = {
-    posts: null
-  }
-
   componentDidMount() {
     ReadableAPI.getAllPosts().then(posts => {
-      this.props.allPosts(posts)
+      posts.forEach(post => {
+        ReadableAPI.getComments(post.id).then(comments => {
+          post.comments = comments;
+        });
+      });
+      console.log("posts with comments", posts);
+      this.props.setPosts( posts );
     });
-
   }
 
   render() {
@@ -32,16 +32,10 @@ class App extends Component {
 
 /* strictType */
 
-function mapStateToProps({ posts }) {
-  return {
-    posts
-  };
-}
-
 function mapDispatchToProps(dispatch) {
   return {
-    allPosts: data => dispatch(selectPosts(data))
+    setPosts: data => dispatch(setPosts(data))
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);

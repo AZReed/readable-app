@@ -1,8 +1,9 @@
-export const SELECT_POSTS = "SELECT_POSTS";
+export const SET_POSTS = "SET_POSTS";
 
-export function selectPosts(posts) {
+export function setPosts( posts ) {
+  console.log('posts in actions', posts)
   return {
-    type: SELECT_POSTS,
-    posts: posts
+    type: SET_POSTS,
+    posts
   };
 }
