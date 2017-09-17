@@ -1,34 +1,53 @@
 import React, { Component } from "react";
-import { Item } from "semantic-ui-react";
-import * as ReadableAPI from "../utils/ReadableAPI";
+import { Item, Label, Divider } from "semantic-ui-react";
+import { connect } from "react-redux";
+// import * as ReadableAPI from "../utils/ReadableAPI";
 
 class Posts extends Component {
-  state = {
-    posts: []
-  };
-
-  componentDidMount() {
-    const posts = ReadableAPI.getAllPosts().then(posts =>
-      this.setState({ posts })
-    );
-    // this.setState( {posts} )
-  }
-
   render() {
+    const posts = this.props.posts || [];
+
+    const checkIfCommentsExists = function(post){
+/*       if(post.comments.length){
+        return 'con comentarios';
+      }
+      return 'sin comentarios'; */
+    }
+
     return (
       <Item.Group>
-        {this.state.posts.map( post => (
-          <Item>
-            <Item.Content>
-              <Item.Header>
-                {post.id}
-              </Item.Header>
-            </Item.Content>
-          </Item>
-        ))}
+        {posts.length &&
+          posts.map( (post, index) => (
+            <Item key={post.id}>
+              <Item.Content>
+                <Item.Header>{post.title}</Item.Header>
+                <Item.Meta>{post.author} {checkIfCommentsExists(post)}</Item.Meta>
+                <Item.Description>{post.body}</Item.Description>
+                <Item.Extra>
+                  <Label as="a" color="blue">
+                    {post.category}
+                  </Label>
+                </Item.Extra>
+              </Item.Content>
+              <Divider></Divider>
+            </Item>
+          ))}
       </Item.Group>
     );
   }
 }
 
-export default Posts;
+function mapStateToProps({ posts }) {
+  return {
+    posts
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    // vote: data => dispatch(votePost(data)),
+    // vote: data => dispatch(votePost(data))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);
