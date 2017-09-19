@@ -11,10 +11,10 @@ const headers = {
   Authorization: token
 };
 
-export const getAllPosts = () =>
-  fetch(`${api}/posts`, { headers })
+export const fetchPosts = async () =>
+  await fetch(`${api}/posts`, { headers })
     .then(res => res.json())
-    .then(data => data);
+    .then(async data => await data);
 
 export const addPost = () =>
   fetch(`${api}/post`, { method: "POST", headers })

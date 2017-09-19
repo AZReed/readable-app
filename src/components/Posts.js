@@ -7,8 +7,10 @@ class Posts extends Component {
   render() {
     const posts = this.props.posts || [];
 
+    console.log(this.props.posts)
+
     const checkIfCommentsExists = function(post){
-      console.log(post.comments)
+      console.log('posts.js', post.comments)
 /*       if(post.comments.length){
         return 'con comentarios';
       }
