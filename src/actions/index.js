@@ -14,16 +14,16 @@ const headers = { headers: { Authorization: token } }; */
 
 export function fetchPosts() {
   // console.log("posts in actions", posts);
-   ReadableAPI.fetchPosts().then(posts =>{
+  ReadableAPI.fetchPosts().then(posts => {
     posts.forEach(post => {
-      ReadableAPI.getComments(post.id).then(async comments =>{
-        post.comments = comments || []
-      })
-    })
-    return {
+      ReadableAPI.getComments(post.id).then(comments => {
+        post.comments = comments || [];
+      });
+    });
+    return (dispatch) => {
       type: FETCH_POSTS,
       posts
-    }
+    };
   });
   // const posts = axios.get(`${BASE_URL}/posts`, headers);
 }

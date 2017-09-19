@@ -23,7 +23,7 @@ class App extends Component {
 
 /* strictType */
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps() {
   return {
     fetchPosts: () => dispatch(fetchPosts())
   };
