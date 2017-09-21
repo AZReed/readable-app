@@ -1,29 +1,32 @@
 import * as ReadableAPI from "../utils/ReadableAPI";
 
 export const FETCH_POSTS = "FETCH_POSTS";
-
-/*
-let token = localStorage.token;
-if (!token)
-  token = localStorage.token = Math.random()
-    .toString(36)
-    .substr(-8);
-
-const BASE_URL = "http://localhost:5001";
-const headers = { headers: { Authorization: token } }; */
-
 export function fetchPosts() {
-  // console.log("posts in actions", posts);
-  ReadableAPI.fetchPosts().then(posts => {
-    posts.forEach(post => {
-      ReadableAPI.getComments(post.id).then(comments => {
-        post.comments = comments || [];
-      });
-    });
-    return (dispatch) => {
-      type: FETCH_POSTS,
-      posts
-    };
-  });
-  // const posts = axios.get(`${BASE_URL}/posts`, headers);
+/*   return dispatch => {
+    ReadableAPI.fetchPosts().then(posts =>
+      dispatch({ type: FETCH_POSTS, posts })
+    );
+  }; */
+  return dispatch => {
+    ReadableAPI.fetchPosts().then(posts => Promise.all(
+        posts.map(post => 
+          ReadableAPI.fetchComments(post.id).then( comments =>
+            post.comments = comments
+          ).then(() => {console.log(post); return post})
+        )
+      )
+    ).then(posts => dispatch({type: FETCH_POSTS, posts}))
+  };
 }
+
+/* export const FETCH_COMMENTS = "FETCH_COMMENTS";
+export function fetchComments(post) {
+  ReadableAPI.fetchComments(post.id).then(comments => {
+    return comments;
+  });
+  return dispatch => {
+    ReadableAPI.fetchComments(post.id).then(comments => {
+      dispatch({ type: FETCH_COMMENTS, comments });
+    });
+  };
+} */

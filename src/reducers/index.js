@@ -2,10 +2,9 @@ import { combineReducers } from "redux";
 import { FETCH_POSTS } from "../actions";
 
 function posts(state = {}, action) {
-  console.log("posts in reducers", action.posts);
   switch (action.type) {
     case FETCH_POSTS:
-      return action.posts
+      return action.posts;
 
     default:
       return state;

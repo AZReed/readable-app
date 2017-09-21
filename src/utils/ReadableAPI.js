@@ -11,22 +11,22 @@ const headers = {
   Authorization: token
 };
 
-export const fetchPosts = async () =>
-  await fetch(`${api}/posts`, { headers })
+export const fetchPosts = () =>
+  fetch(`${api}/posts`, { headers })
     .then(res => res.json())
-    .then(async data => await data);
+    .then(data => data);
 
 export const addPost = () =>
   fetch(`${api}/post`, { method: "POST", headers })
     .then(res => res.json())
     .then(data => console.log(data));
 
-export const getComments = postID =>
+export const fetchComments = postID =>
   fetch(`${api}/posts/${postID}/comments`, { method: "GET", headers })
     .then(res => res.json())
     .then(data => data);
 
-export const getCategories = () =>
+export const fetchCategories = () =>
   fetch(`${api}/categories`, { headers })
     .then(res => res.json())
     .then(data => console.log(data));
