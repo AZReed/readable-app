@@ -6,13 +6,16 @@ function posts(state = {}, action) {
   console.log('action', action);
   switch (action.type) {
     case FETCH_POSTS:
-      return action.posts
-
-    case VOTE_POST:
-      return {...state, post: action.post}
+      // return action.posts
+      const { posts } = action;
+      return [...state, ...posts]
+      
+      case VOTE_POST:
+      const { post } = action;
+      return {...state,  ...post}
 
     default:
-      return state;
+      return [...state];
   }
 }
 

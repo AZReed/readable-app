@@ -26,5 +26,6 @@ export const VOTE_POST = "VOTE_POST";
 export function votePost(postID, vote) {
   return dispatch => {
     ReadableAPI.votePost(postID, vote).then(post => dispatch({ type: VOTE_POST, post}));
+    // ReadableAPI.votePost(postID, vote).then(post => console.log(post));
   };
 }
