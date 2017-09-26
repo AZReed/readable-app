@@ -22,9 +22,13 @@ export const addPost = () =>
     .then(data => console.log(data));
 
 export const votePost = (postID, vote) =>
-  fetch(`${api}/posts/${postID}/?option='${vote}'`, { method: "POST", headers })
+  fetch(`${api}/posts/${postID}`, {
+    method: "POST",
+    headers,
+    option: vote
+  })
     .then(res => res.json())
-    .then(data => data)
+    .then(data => data);
 
 export const fetchComments = postID =>
   fetch(`${api}/posts/${postID}/comments`, { method: "GET", headers })

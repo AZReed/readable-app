@@ -16,9 +16,10 @@ const Posts = props => {
   );
 };
 
-function mapStateToProps({ state, posts }) {
+function mapStateToProps(state) {
+  console.log(state);
   return {
-    posts: posts
+    posts: state.posts
   };
 }
 
