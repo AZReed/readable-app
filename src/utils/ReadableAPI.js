@@ -17,9 +17,14 @@ export const fetchPosts = () =>
     .then(data => data);
 
 export const addPost = () =>
-  fetch(`${api}/post`, { method: "POST", headers })
+  fetch(`${api}/posts`, { method: "POST", headers })
     .then(res => res.json())
     .then(data => console.log(data));
+
+export const votePost = (postID, vote) =>
+  fetch(`${api}/posts/${postID}/?option='${vote}'`, { method: "POST", headers })
+    .then(res => res.json())
+    .then(data => data)
 
 export const fetchComments = postID =>
   fetch(`${api}/posts/${postID}/comments`, { method: "GET", headers })

@@ -2,31 +2,29 @@ import * as ReadableAPI from "../utils/ReadableAPI";
 
 export const FETCH_POSTS = "FETCH_POSTS";
 export function fetchPosts() {
-/*   return dispatch => {
+  /*   return dispatch => {
     ReadableAPI.fetchPosts().then(posts =>
       dispatch({ type: FETCH_POSTS, posts })
     );
   }; */
   return dispatch => {
-    ReadableAPI.fetchPosts().then(posts => Promise.all(
-        posts.map(post => 
-          ReadableAPI.fetchComments(post.id).then( comments =>
-            post.comments = comments
-          ).then(() => {console.log(post); return post})
+    ReadableAPI.fetchPosts()
+      .then(posts =>
+        Promise.all(
+          posts.map(post =>
+            ReadableAPI.fetchComments(post.id)
+              .then(comments => (post.comments = comments))
+              .then(() => post)
+          )
         )
       )
-    ).then(posts => dispatch({type: FETCH_POSTS, posts}))
+      .then(posts => dispatch({ type: FETCH_POSTS, posts }));
   };
 }
 
-/* export const FETCH_COMMENTS = "FETCH_COMMENTS";
-export function fetchComments(post) {
-  ReadableAPI.fetchComments(post.id).then(comments => {
-    return comments;
-  });
+export const VOTE_POST = "VOTE_POST";
+export function votePost(postID, vote) {
   return dispatch => {
-    ReadableAPI.fetchComments(post.id).then(comments => {
-      dispatch({ type: FETCH_COMMENTS, comments });
-    });
+    ReadableAPI.votePost(postID, vote).then(post => console.log(vote, post));
   };
-} */
+}

@@ -9,7 +9,12 @@ class Home extends Component {
   }
 
   render() {
-    return <Posts />;
+    return (
+      <div>
+        <h3>Readable App Home</h3>
+        <Posts />
+      </div>
+    );
   }
 }
 
