@@ -6,13 +6,8 @@ import { votePost } from "../actions";
 // import * as ReadableAPI from "../utils/ReadableAPI";
 
 const Posts = props => {
-  function check(foobar) {
-    
-  }
-
   return (
     <Item.Group>
-      {check(props)}
       {props.posts.length &&
         props.posts.map(post => (
           <Post key={post.id} post={post} vote={props.vote} />
@@ -20,11 +15,24 @@ const Posts = props => {
     </Item.Group>
   );
 };
+/* 
+function mapStateToProps(state) {
+  console.log("mapstatetoprops", state);
 
-function mapStateToProps({ state, posts }) {
-  console.log("mapstatetoprops", state, posts);
+  if (typeof state === "undefined") {
+    console.log('dentro')
+    state = { posts: 1 };
+  }
   return {
-    posts: posts
+    posts: state.posts || []
+  };
+}
+ */
+function mapStateToProps({ posts, categories }, ownProps) {
+  console.log("mapstatetoprops", posts, categories, ownProps);
+
+  return {
+    posts: posts.allPosts || []
   };
 }
 

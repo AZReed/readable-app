@@ -31,11 +31,6 @@ const Post = props => {
               {props.post.category}
             </Label>
           </Item.Meta>
-          {/*                 <Item.Extra>
-            <Label as="a" color="blue" size="tiny">
-              {props.post.category}
-            </Label>
-          </Item.Extra> */}
         </Item.Content>
       </div>
     </Item>
