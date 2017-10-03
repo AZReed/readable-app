@@ -8,5 +8,14 @@
 }
 
 #voteScore {
-  margin-left: 7px
+  text-align: center;
+}
+
+#post .header {
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.comment {
+  display: inline-flex;
 }

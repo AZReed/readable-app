@@ -8,32 +8,49 @@ if (!token)
     .substr(-8);
 
 const headers = {
-  Authorization: token
+  Accept: "application/json",
+  Authorization: token,
+  "Content-Type": "application/json"
 };
 
 export const fetchPosts = () =>
-  fetch(`${api}/posts`, { headers })
-    .then(res => res.json())
-    .then(data => data);
+  fetch(`${api}/posts`, { headers }).then(res => res.json());
 
 export const addPost = () =>
-  fetch(`${api}/posts`, { method: "POST", headers })
+  fetch(`${api}/posts`, {
+    method: "POST",
+    headers
+  })
     .then(res => res.json())
     .then(data => console.log(data));
 
-export const votePost = (postID, vote) =>
+export const votePost = (postID, status) =>
   fetch(`${api}/posts/${postID}`, {
     method: "POST",
-    headers,
-    option: vote
+    headers: headers,
+    body: JSON.stringify({ option: status })
   })
     .then(res => res.json())
-    .then(data => data);
+    .catch(error => {
+      return error;
+    });
 
 export const fetchComments = postID =>
-  fetch(`${api}/posts/${postID}/comments`, { method: "GET", headers })
+  fetch(`${api}/posts/${postID}/comments`, {
+    method: "GET",
+    headers
+  }).then(res => res.json());
+
+export const voteComment = (postID, status) =>
+  fetch(`${api}/comments/${postID}`, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({ option: status })
+  })
     .then(res => res.json())
-    .then(data => data);
+    .catch(error => {
+      return error;
+    });
 
 export const fetchCategories = () =>
   fetch(`${api}/categories`, { headers })

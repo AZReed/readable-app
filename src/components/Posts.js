@@ -1,35 +1,40 @@
-import React from "react";
+import React, { Component } from "react";
 import { Item } from "semantic-ui-react";
 import { connect } from "react-redux";
 import Post from "./Post";
-import { votePost } from "../actions";
-// import * as ReadableAPI from "../utils/ReadableAPI";
+// import { votePost } from "../actions";
+import { fetchPosts } from "../actions";
 
-const Posts = props => {
-  return (
-    <Item.Group>
-      {props.posts.length &&
-        props.posts.map(post => (
-          <Post key={post.id} post={post} vote={props.vote} />
-        ))}
-    </Item.Group>
-  );
-};
-/* 
-function mapStateToProps(state) {
-  console.log("mapstatetoprops", state);
-
-  if (typeof state === "undefined") {
-    console.log('dentro')
-    state = { posts: 1 };
+class Posts extends Component {
+  componentDidMount() {
+    this.props.fetchPosts();
   }
-  return {
-    posts: state.posts || []
-  };
+
+  render() {
+    const { posts } = this.props;
+
+    return (
+      <Item.Group>
+        {posts.map((post, index) => (
+          <Post key={post.id} post={post} />
+        ))}
+      </Item.Group>
+    );
+  }
 }
- */
-function mapStateToProps({ posts, categories }, ownProps) {
-  console.log("mapstatetoprops", posts, categories, ownProps);
+
+function mapStateToProps({ posts }) {
+  console.log("mapstatetoprops posts", posts);
+
+/*   if (posts.allPosts) {
+    var procesedPosts = posts.allPosts.map(post => {
+      if (posts.updatedPost && post.id === posts.updatedPost.id) {
+        let post_copy = Object.assign(post, posts.updatedPost);
+        return post_copy;
+      }
+      return post;
+    });
+  } */
 
   return {
     posts: posts.allPosts || []
@@ -38,8 +43,10 @@ function mapStateToProps({ posts, categories }, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    vote: (postID, v) => dispatch(votePost(postID, v))
+    // votePost: (postID, vote) => dispatch(votePost(postID, vote)),
+    fetchPosts: () => dispatch(fetchPosts())
   };
 }
 
+// export default connect(mapStateToProps, mapDispatchToProps)(Posts);
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);
