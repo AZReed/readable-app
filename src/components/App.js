@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-// import Posts from "./Posts";
-import Categories from "./Categories";
-// import Home from "./Home";
 import Posts from "./Posts";
+import Categories from "./Categories";
+//import Home from "./Home";
 import { Container } from "semantic-ui-react";
 import { Route } from "react-router-dom";
 
