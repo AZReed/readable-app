@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Item } from "semantic-ui-react";
 import { connect } from "react-redux";
 import Post from "./Post";
-//import { votePost } from "../actions";
 import { fetchPosts } from "../actions";
 
 class Posts extends Component {
@@ -20,26 +19,15 @@ class Posts extends Component {
 }
 
 function mapStateToProps({ posts }) {
-  console.log("mapstatetoprops posts", posts);
-
-/*   if (posts.allPosts) {
-    var procesedPosts = posts.allPosts.map(post => {
-      if (posts.updatedPost && post.id === posts.updatedPost.id) {
-        return Object.assign(post, posts.updatedPost);
-      }
-      return post;
-    });
-  } */
+  //console.log("mapstatetoprops posts", posts);
 
   return {
-    //posts: procesedPosts || []
     posts: posts.allPosts || []
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    //votePost: (postID, vote) => dispatch(votePost(postID, vote)),
     fetchPosts: () => dispatch(fetchPosts())
   };
 }
