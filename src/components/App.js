@@ -1,17 +1,15 @@
 import React, { Component } from "react";
 import Posts from "./Posts";
 import Categories from "./Categories";
-//import Home from "./Home";
-import { Container } from "semantic-ui-react";
 import { Route } from "react-router-dom";
 
 class App extends Component {
   render() {
     return (
-      <Container>
+      <section className="section">
         <Route exact path="/" render={() => <Posts />} />
         <Route exact path="/categories" render={() => <Categories />} />
-      </Container>
+      </section>
     );
   }
 }

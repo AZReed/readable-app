@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Item } from "semantic-ui-react";
+//import { Item } from "semantic-ui-react";
 import { connect } from "react-redux";
 import Post from "./Post";
 import { fetchPosts } from "../actions";
@@ -11,9 +11,9 @@ class Posts extends Component {
 
   render() {
     return (
-      <Item.Group>
+      <div className="container">
         {this.props.posts.map((post, index) => <Post key={post.id} post={post}/>)}
-      </Item.Group>
+      </div>
     );
   }
 }

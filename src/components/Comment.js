@@ -16,7 +16,7 @@ class Comment extends Component {
           id={comment.id}
         />
         <div>
-          <div as="a">{comment.author}</div>
+          <div>{comment.author}</div>
           <div>
             <span>Posted by {handleTime(comment.timestamp)}</span>
           </div>

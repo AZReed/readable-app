@@ -1,18 +1,19 @@
 import React from "react";
-import { Icon, Segment } from "semantic-ui-react";
 
 const VoteScore = props => {
   return (
     <div>
-      <Segment vertical onClick={() => props.vote(props.id, "upVote")}>
-        <Icon link name="chevron up" size="large" />
-      </Segment>
-      <Segment vertical id="voteScore">
+      <div onClick={() => props.vote(props.id, "upVote")}>
+        {/* <div link name="chevron up" size="large" /> */}
+        <i className="fa fa-chevron-up" aria-hidden="true"></i>
+      </div>
+      <div id="voteScore">
         {props.voteScore}
-      </Segment>
-      <Segment vertical onClick={() => props.vote(props.id, "downVote")}>
-        <Icon link name="chevron down" size="large" />
-      </Segment>
+      </div>
+      <div onClick={() => props.vote(props.id, "downVote")}>
+        {/* <div link name="chevron down" size="large" /> */}
+        <i className="fa fa-chevron-down" aria-hidden="true"></i>
+      </div>
     </div>
   );
 };
