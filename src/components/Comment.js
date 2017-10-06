@@ -20,12 +20,10 @@ class Comment extends Component {
         <div className="media-content">
           <div className="content">
             <p>
-              <strong>{comment.author} </strong>
-              <br />
               {comment.body}
               <br />
               <small>
-                <a>Edit</a> · <a>Reply</a> · {handleTime(comment.timestamp)}
+                <a>Edit</a> · Posted by <strong>{comment.author} </strong> {handleTime(comment.timestamp)}
               </small>
             </p>
           </div>
