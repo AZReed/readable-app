@@ -19,6 +19,27 @@ class Post extends Component {
     const { post, votePost } = this.props;
 
     return (
+      <article className="media">
+        <div className="media-left">
+          <VoteScore voteScore={post.voteScore} vote={votePost} id={post.id} />
+        </div>
+        <div className="media-content">
+          <div className="content">
+            <p>
+              <strong>{post.title}</strong>
+              <br />
+              {post.body}
+              <br />
+              <small>
+                <a>Edit</a> · <a>Reply</a> · Posted by <strong>{post.author}</strong> {this.handleTime(post.timestamp)} |{" "}
+                {post.category}
+              </small>
+            </p>
+          </div>
+
+          <Comments post={post} handleTime={this.handleTime} />
+        </div>
+        {/*       
       <div className="box">
         <div id="post">
           <VoteScore
@@ -40,7 +61,8 @@ class Post extends Component {
 
           <Comments post={post} handleTime={this.handleTime} />
         </div>
-      </div>
+      </div>*/}
+      </article>
     );
   }
 }
@@ -59,7 +81,7 @@ function mapStateToProps({ posts }, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    votePost: (postID, vote) => dispatch(votePost(postID, vote))  //Cambiar el vote post a posts para que no lo importe cada rendericazion de post
+    votePost: (postID, vote) => dispatch(votePost(postID, vote)) //Cambiar el vote post a posts para que no lo importe cada rendericazion de post
     //voteComment: (postID, vote) => dispatch(voteComment(postID, vote))
   };
 }
