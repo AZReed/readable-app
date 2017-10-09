@@ -6,17 +6,35 @@ class Comment extends Component {
   render() {
     const { comment, voteComment, handleTime } = this.props;
 
-    //console.log(this.props);
-
     return (
-      <div>
+      <article className="media">
+        <div className="media-left">
+          <VoteScore
+            voteScore={comment.voteScore}
+            vote={voteComment}
+            id={comment.id}
+          />
+        </div>
+        <div className="media-content">
+          <div className="content">
+            <p>
+              {comment.body}
+              <br />
+              <small>
+                <a>Edit</a> · <a onClick={() => this.props.deleteComment(comment.id)}>Delete</a> · Posted by <strong>{comment.author} </strong> {handleTime(comment.timestamp)}
+              </small>
+            </p>
+          </div>
+        </div>
+      </article>
+      /*       <div>
         <VoteScore
           voteScore={comment.voteScore}
           vote={voteComment}
           id={comment.id}
         />
         <div>
-          <div as="a">{comment.author}</div>
+          <div>{comment.author}</div>
           <div>
             <span>Posted by {handleTime(comment.timestamp)}</span>
           </div>
@@ -27,21 +45,24 @@ class Comment extends Component {
             <a>Reply</a>
           </div>
         </div>
-      </div>
+      </div> */
     );
   }
 }
 
-function mapStateToProps({comments}, ownProps) {
-  console.log(comments, ownProps)
+function mapStateToProps({ comments }, ownProps) {
+  //console.log(comments, ownProps);
 
-  if (comments.updatedComment && comments.updatedComment.id === ownProps.comment.id) {
+  if (
+    comments.updatedComment &&
+    comments.updatedComment.id === ownProps.comment.id
+  ) {
     ownProps.comment.voteScore = comments.updatedComment.voteScore;
   }
-  
+
   return {
     comment: Object.assign({}, ownProps.comment)
-  }
+  };
 }
 
 export default connect(mapStateToProps)(Comment);

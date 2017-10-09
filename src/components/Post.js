@@ -2,14 +2,21 @@ import React, { Component } from "react";
 import VoteScore from "./VoteScore";
 import Comments from "./Comments";
 import { connect } from "react-redux";
-import { Item, Label } from "semantic-ui-react";
 import * as moment from "moment";
 import { votePost } from "../actions";
+import * as ReadableAPI from "../utils/ReadableAPI";
+
 
 class Post extends Component {
   componentDidMount() {
     //console.log(this.props)
     //this.fetchComments()
+  }
+
+  giveMeComments (post) {
+    ReadableAPI.fetchComments(post.id)
+      .then(comments => (post.comments = comments))
+      .then(() => console.log(post))
   }
 
   handleTime = timestamp => {
@@ -19,29 +26,53 @@ class Post extends Component {
   render() {
     const { post, votePost } = this.props;
 
+
+
     return (
-      <Item>
+      <article className="media">
+        <div className="media-left">
+          <VoteScore voteScore={post.voteScore} vote={votePost} id={post.id} />
+        </div>
+        <div className="media-content">
+          <div className="content">
+            <p>
+              <strong>{post.title}</strong>
+              <br />
+              {post.body}
+              <br />
+              <small>
+                <a onClick={() => this.giveMeComments(post)}>Edit</a> · <a onClick={() => this.props.reply(post)}>Reply</a> · Posted by <strong>{post.author}</strong> {this.handleTime(post.timestamp)} |{" "}
+                {post.category}
+              </small>
+            </p>
+          </div>
+
+          <Comments post={post} handleTime={this.handleTime} />
+        </div>
+        {/*       
+      <div className="box">
         <div id="post">
           <VoteScore
             voteScore={post.voteScore}
             vote={votePost}
             id={post.id}
           />
-          <Item.Content>
-            <Item.Header>{post.title}</Item.Header>
-            <Item.Description>{post.body}</Item.Description>
-            <Item.Meta>
+          <div>
+            <div>{post.title}</div>
+            <div>{post.body}</div>
+            <div>
               Posted by {post.author} {this.handleTime(post.timestamp)}|{" "}
               {post.comments.length} comments |
-              <Label as="a" color="blue" size="tiny">
+              <div>
                 {post.category}
-              </Label>
-            </Item.Meta>
-          </Item.Content>
+              </div>
+            </div>
+          </div>
 
           <Comments post={post} handleTime={this.handleTime} />
         </div>
-      </Item>
+      </div>*/}
+      </article>
     );
   }
 }
@@ -60,7 +91,7 @@ function mapStateToProps({ posts }, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    votePost: (postID, vote) => dispatch(votePost(postID, vote))  //Cambiar el vote post a posts para que no lo importe cada rendericazion de post
+    votePost: (postID, vote) => dispatch(votePost(postID, vote)) //Cambiar el vote post a posts para que no lo importe cada rendericazion de post
     //voteComment: (postID, vote) => dispatch(voteComment(postID, vote))
   };
 }

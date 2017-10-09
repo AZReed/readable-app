@@ -1,19 +1,38 @@
-import React, { Component } from "react";
+import React from "react";
 import Posts from "./Posts";
 import Categories from "./Categories";
-//import Home from "./Home";
-import { Container } from "semantic-ui-react";
 import { Route } from "react-router-dom";
 
-class App extends Component {
-  render() {
+const App = () => {
     return (
-      <Container>
-        <Route exact path="/" render={() => <Posts />} />
-        <Route exact path="/categories" render={() => <Categories />} />
-      </Container>
+      <section className="section">
+        <div className="container">
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <div className="columns">
+                <div className="column is-3">
+                  <Categories />
+                </div>
+                <div className="column is-9">
+                  <Posts />
+                </div>
+              </div>
+            )}
+          />
+        </div>
+      </section>
     );
-  }
+}
+
+{
+  /*
+  <section className="section">
+    <Route exact path="/" render={() => <Posts />} />
+    <Route exact path="/categories" render={() => <Categories />} />
+  </section>
+*/
 }
 
 export default App;
