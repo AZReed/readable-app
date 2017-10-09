@@ -4,11 +4,19 @@ import Comments from "./Comments";
 import { connect } from "react-redux";
 import * as moment from "moment";
 import { votePost } from "../actions";
+import * as ReadableAPI from "../utils/ReadableAPI";
+
 
 class Post extends Component {
   componentDidMount() {
     //console.log(this.props)
     //this.fetchComments()
+  }
+
+  giveMeComments (post) {
+    ReadableAPI.fetchComments(post.id)
+      .then(comments => (post.comments = comments))
+      .then(() => console.log(post))
   }
 
   handleTime = timestamp => {
@@ -17,6 +25,8 @@ class Post extends Component {
 
   render() {
     const { post, votePost } = this.props;
+
+
 
     return (
       <article className="media">
@@ -31,7 +41,7 @@ class Post extends Component {
               {post.body}
               <br />
               <small>
-                <a>Edit</a> · <a>Reply</a> · Posted by <strong>{post.author}</strong> {this.handleTime(post.timestamp)} |{" "}
+                <a onClick={() => this.giveMeComments(post)}>Edit</a> · <a onClick={() => this.props.reply(post)}>Reply</a> · Posted by <strong>{post.author}</strong> {this.handleTime(post.timestamp)} |{" "}
                 {post.category}
               </small>
             </p>

@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import Posts from "./Posts";
 import Categories from "./Categories";
 import { Route } from "react-router-dom";
 
-class App extends Component {
-  render() {
+const App = () => {
     return (
       <section className="section">
         <div className="container">
@@ -13,10 +12,10 @@ class App extends Component {
             path="/"
             render={() => (
               <div className="columns">
-                <div className="column">
+                <div className="column is-3">
                   <Categories />
                 </div>
-                <div className="column">
+                <div className="column is-9">
                   <Posts />
                 </div>
               </div>
@@ -25,7 +24,6 @@ class App extends Component {
         </div>
       </section>
     );
-  }
 }
 
 {

@@ -1,18 +1,18 @@
 import React from "react";
 import Comment from "./Comment";
-import { voteComment } from "../actions";
+import { voteComment, deleteComment } from "../actions";
 import { connect } from "react-redux";
 
 const Comments = props => {
-
   return (
     <div>
       {props.post.comments.map(comment => (
-        <Comment 
+        <Comment
           key={comment.id}
           comment={comment}
           handleTime={props.handleTime}
           voteComment={props.voteComment}
+          deleteComment={props.deleteComment}
         />
       ))}
     </div>
@@ -29,7 +29,8 @@ function mapStateToProps({ posts }, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    voteComment: (postID, vote) => dispatch(voteComment(postID, vote))
+    voteComment: (postID, vote) => dispatch(voteComment(postID, vote)),
+    deleteComment: commentID => dispatch(deleteComment(commentID))
   };
 }
 

@@ -6,8 +6,6 @@ class Comment extends Component {
   render() {
     const { comment, voteComment, handleTime } = this.props;
 
-    //console.log(this.props);
-
     return (
       <article className="media">
         <div className="media-left">
@@ -23,7 +21,7 @@ class Comment extends Component {
               {comment.body}
               <br />
               <small>
-                <a>Edit</a> · Posted by <strong>{comment.author} </strong> {handleTime(comment.timestamp)}
+                <a>Edit</a> · <a onClick={() => this.props.deleteComment(comment.id)}>Delete</a> · Posted by <strong>{comment.author} </strong> {handleTime(comment.timestamp)}
               </small>
             </p>
           </div>
@@ -53,7 +51,7 @@ class Comment extends Component {
 }
 
 function mapStateToProps({ comments }, ownProps) {
-  console.log(comments, ownProps);
+  //console.log(comments, ownProps);
 
   if (
     comments.updatedComment &&

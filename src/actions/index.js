@@ -34,3 +34,22 @@ export function voteComment(postID, vote) {
     );
   };
 }
+
+export const ADD_COMMENT = "ADD_COMMENT";
+export function addComment(comment) {
+  return dispatch => {
+    ReadableAPI.addComment(comment).then(comment =>
+      dispatch({ type: ADD_COMMENT, comment })
+    );
+  };
+}
+
+export const DELETE_COMMENT = "DELETE_COMMENT";
+export function deleteComment(commentID) {
+  return dispatch => {
+    ReadableAPI.deleteComment(commentID).then(comment =>{
+      console.log(comment)
+      dispatch({ type: DELETE_COMMENT, comment })
+    });
+  };
+}

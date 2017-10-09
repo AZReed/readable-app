@@ -31,9 +31,7 @@ export const votePost = (postID, status) =>
     body: JSON.stringify({ option: status })
   })
     .then(res => res.json())
-    .catch(error => {
-      return error;
-    });
+    .catch(error => error);
 
 export const fetchComments = postID =>
   fetch(`${api}/posts/${postID}/comments`, {
@@ -48,9 +46,30 @@ export const voteComment = (postID, status) =>
     body: JSON.stringify({ option: status })
   })
     .then(res => res.json())
-    .catch(error => {
-      return error;
-    });
+    .catch(error => error);
+
+export const addComment = comment =>
+  fetch(`${api}/comments/`, {
+    method: "POST",
+    headers,
+    // body: JSON.stringify(comment)
+    body: JSON.stringify(comment)
+  })
+    .then(res => res.json())
+    .catch(error => error);
+
+export const deleteComment = commentID => {
+  console.log(commentID);
+  return fetch(`${api}/comments/${commentID}`, {
+    method: "DELETE",
+    headers
+  })
+    .then(res => {
+      console.log(res);
+      return res.json();
+    })
+    .catch(error => error);
+};
 
 export const fetchCategories = () =>
   fetch(`${api}/categories`, { headers })
