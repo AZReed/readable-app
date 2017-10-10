@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Post from "./Post";
 import { fetchPosts, addComment } from "../actions";
 import uuid from "uuid";
+import { Link } from "react-router-dom";
 
 class Posts extends Component {
   componentDidMount() {
@@ -12,6 +13,7 @@ class Posts extends Component {
 
   reply = post => {
     let id = uuid();
+    console.log(id)
     let comment = {
       id: id.split("-").join(""),
       timestamp: Date.now(),
@@ -30,6 +32,7 @@ class Posts extends Component {
   render() {
     return (
       <div className="container">
+        <Link to={`/post/`} className="active">Add Post</Link>
         {this.props.posts.map((post, index) => (
           <Post key={post.id} post={post} reply={this.reply} />
         ))}
@@ -39,6 +42,7 @@ class Posts extends Component {
 }
 
 function mapStateToProps({ posts, comments }) {
+  console.log("mapState posts");
 
 /*   let filteredPosts;
   if (posts.allPosts) {

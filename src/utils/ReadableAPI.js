@@ -58,9 +58,8 @@ export const addComment = comment =>
     .then(res => res.json())
     .catch(error => error);
 
-export const deleteComment = commentID => {
-  console.log(commentID);
-  return fetch(`${api}/comments/${commentID}`, {
+export const deleteComment = commentID =>
+  fetch(`${api}/comments/${commentID}`, {
     method: "DELETE",
     headers
   })
@@ -69,7 +68,6 @@ export const deleteComment = commentID => {
       return res.json();
     })
     .catch(error => error);
-};
 
 export const fetchCategories = () =>
   fetch(`${api}/categories`, { headers })
