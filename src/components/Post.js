@@ -93,7 +93,6 @@ function mapStateToProps({ posts, comments }, ownProps) {
 
   if ( comments.deletedComment && comments.deletedComment.parentId === ownProps.post.id ) {
     if (ownProps.post.comments.length > 0) {
-      console.log("dentro 2");
       ownProps.post.comments = ownProps.post.comments.filter(comment => {
         if (comment.id === comments.deletedComment.id) {
           return false;
@@ -102,6 +101,8 @@ function mapStateToProps({ posts, comments }, ownProps) {
       });
     }
   }
+
+  //ownProps.post.comments = ownProps.post.comments.sort( (comment, foobar) => {console.log(foobar); return comment.timestamp < foobar.timestamp})
 
   return {
     post: Object.assign({}, ownProps.post)
