@@ -6,17 +6,16 @@ import * as moment from "moment";
 import { votePost } from "../actions";
 import * as ReadableAPI from "../utils/ReadableAPI";
 
-
 class Post extends Component {
   componentDidMount() {
     //console.log(this.props)
     //this.fetchComments()
   }
 
-  giveMeComments (post) {
+  giveMeComments(post) {
     ReadableAPI.fetchComments(post.id)
       .then(comments => (post.comments = comments))
-      .then(() => console.log(post))
+      .then(() => console.log(post));
   }
 
   handleTime = timestamp => {
@@ -25,8 +24,6 @@ class Post extends Component {
 
   render() {
     const { post, votePost } = this.props;
-
-
 
     return (
       <article className="media">
@@ -41,8 +38,10 @@ class Post extends Component {
               {post.body}
               <br />
               <small>
-                <a onClick={() => this.giveMeComments(post)}>Edit</a> · <a onClick={() => this.props.reply(post)}>Reply</a> · Posted by <strong>{post.author}</strong> {this.handleTime(post.timestamp)} |{" "}
-                {post.category}
+                <a onClick={() => this.giveMeComments(post)}>Edit</a> ·{" "}
+                <a onClick={() => this.props.reply(post)}>Reply</a> · Posted by{" "}
+                <strong>{post.author}</strong> {this.handleTime(post.timestamp)}{" "}
+                | {post.category}
               </small>
             </p>
           </div>
@@ -77,11 +76,31 @@ class Post extends Component {
   }
 }
 
-function mapStateToProps({ posts }, ownProps) {
+function mapStateToProps({ posts, comments }, ownProps) {
   //console.log("mapstateto single", posts, ownProps);
+  //console.log("mapState post", comments);
 
   if (posts.updatedPost && posts.updatedPost.id === ownProps.post.id) {
     ownProps.post.voteScore = posts.updatedPost.voteScore;
+  }
+
+  if (
+    comments.addedComment &&
+    comments.addedComment.parentId === ownProps.post.id
+  ) {
+    ownProps.post.comments.push(comments.addedComment);
+  }
+
+  if ( comments.deletedComment && comments.deletedComment.parentId === ownProps.post.id ) {
+    if (ownProps.post.comments.length > 0) {
+      console.log("dentro 2");
+      ownProps.post.comments = ownProps.post.comments.filter(comment => {
+        if (comment.id === comments.deletedComment.id) {
+          return false;
+        }
+        return true;
+      });
+    }
   }
 
   return {

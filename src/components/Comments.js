@@ -22,6 +22,10 @@ const Comments = props => {
 function mapStateToProps({ posts }, ownProps) {
   //console.log(ownProps.post);
 
+/*   ownProps.post.comments = ownProps.post.comments.filter(comment => {
+    return !comment.delete
+  }) */
+
   return {
     comments: ownProps.post.comments || []
   };

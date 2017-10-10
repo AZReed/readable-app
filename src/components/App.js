@@ -21,6 +21,9 @@ const App = () => {
               </div>
             )}
           />
+          <Route exact path="/post" render={() => (
+            <p>foobar</p>
+          )}/>
         </div>
       </section>
     );

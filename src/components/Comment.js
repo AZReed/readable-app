@@ -51,7 +51,6 @@ class Comment extends Component {
 }
 
 function mapStateToProps({ comments }, ownProps) {
-  //console.log(comments, ownProps);
 
   if (
     comments.updatedComment &&
