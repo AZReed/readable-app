@@ -13,13 +13,12 @@ class addPost extends Component {
     category: null,
     title: "",
     message: ""
-  }
-
+  };
 
   categories() {
     if (this.props.categories.allCategories) {
       return (
-        <select name="categories" onChange={this.handleChange}>
+        <select name="categories" onChange={event => this.handleChange(event)}>
           {this.props.categories.allCategories.map(category => (
             <option key={category.name} value={category.name}>
               {category.name}
@@ -31,25 +30,34 @@ class addPost extends Component {
   }
 
   handleChange(event) {
-    console.log(event.target.name)
     let input_name = event.target.name;
 
     switch (input_name) {
       case "author":
-        this.setState({author: event.target.value})
+        this.setState({ author: event.target.value });
         break;
 
       case "categories":
-        this.setState({categories: event.target.value})
+        console.log("dentro");
+        this.setState({ category: event.target.value });
         break;
-    
+
+      case "title":
+        this.setState({ title: event.target.value });
+        break;
+
+      case "message":
+        this.setState({ message: event.target.value });
+        break;
+
       default:
         break;
     }
+    console.log(event.target.name, this.state);
   }
 
   submit(event) {
-    console.log("foobar")
+    console.log("foobar");
     event.preventDefault();
   }
 
@@ -72,7 +80,13 @@ class addPost extends Component {
             <div className="field-body">
               <div className="field">
                 <p className="control is-expanded has-icons-left">
-                  <input className="input" type="text" name="author" onChange={this.handleChange} placeholder="Name" />
+                  <input
+                    className="input"
+                    type="text"
+                    name="author"
+                    onChange={event => this.handleChange(event)}
+                    placeholder="Name"
+                  />
                   <span className="icon is-small is-left">
                     <i className="fa fa-user" />
                   </span>
@@ -101,7 +115,13 @@ class addPost extends Component {
             <div className="field-body">
               <div className="field">
                 <p className="control is-expanded">
-                  <input className="input" type="text" placeholder="Title" />
+                  <input
+                    className="input"
+                    type="text"
+                    name="title"
+                    onChange={event => this.handleChange(event)}
+                    placeholder="Title"
+                  />
                 </p>
               </div>
             </div>
@@ -116,6 +136,8 @@ class addPost extends Component {
                 <div className="control">
                   <textarea
                     className="textarea"
+                    name="message"
+                    onChange={event => this.handleChange(event)}
                     placeholder="Express yourself"
                   />
                 </div>
@@ -125,7 +147,12 @@ class addPost extends Component {
 
           <div className="field is-grouped">
             <div className="control">
-              <input type="submit" className="button is-link" value="Submit" onClick={this.submit} />
+              <input
+                type="submit"
+                className="button is-link"
+                value="Submit"
+                onClick={this.submit}
+              />
             </div>
             <div className="control">
               <button className="button is-text">Cancel</button>
