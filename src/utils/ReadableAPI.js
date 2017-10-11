@@ -72,4 +72,4 @@ export const deleteComment = commentID =>
 export const fetchCategories = () =>
   fetch(`${api}/categories`, { headers })
     .then(res => res.json())
-    .then(data => console.log(data));
+    .catch(error => error);

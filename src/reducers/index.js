@@ -1,5 +1,12 @@
 import { combineReducers } from "redux";
-import { FETCH_POSTS, VOTE_POST, VOTE_COMMENT, ADD_COMMENT, DELETE_COMMENT } from "../actions";
+import {
+  FETCH_POSTS,
+  VOTE_POST,
+  VOTE_COMMENT,
+  ADD_COMMENT,
+  DELETE_COMMENT,
+  FETCH_CATEGORIES
+} from "../actions";
 
 function posts(state = {}, action) {
   // console.log("state", state);
@@ -38,11 +45,10 @@ function comments(state = {}, action) {
       };
 
     case DELETE_COMMENT:
-      console.log('delete comment', action)
       return {
         ...state,
         deletedComment: action.comment
-      }
+      };
 
     default:
       return { ...state };
@@ -51,8 +57,14 @@ function comments(state = {}, action) {
 
 function categories(state = {}, action) {
   switch (action.type) {
+    case FETCH_CATEGORIES:
+      return {
+        ...state,
+        allCategories: action.categories.categories
+      };
+
     default:
-      return { foobar: "here I am" };
+      return { ...state };
   }
 }
 

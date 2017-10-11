@@ -47,9 +47,17 @@ export function addComment(comment) {
 export const DELETE_COMMENT = "DELETE_COMMENT";
 export function deleteComment(commentID) {
   return dispatch => {
-    ReadableAPI.deleteComment(commentID).then(comment =>{
-      console.log(comment)
+    ReadableAPI.deleteComment(commentID).then(comment =>
       dispatch({ type: DELETE_COMMENT, comment })
-    });
+    );
+  };
+}
+
+export const FETCH_CATEGORIES = "FETCH_CATEGORIES";
+export function fetchCategories() {
+  return dispatch => {
+    ReadableAPI.fetchCategories().then(categories =>
+      dispatch({ type: FETCH_CATEGORIES, categories })
+    );
   };
 }
