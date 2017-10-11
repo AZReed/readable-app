@@ -17,6 +17,13 @@ export function fetchPosts() {
   };
 }
 
+export const ADD_POST = "ADD_POST";
+export function addPost(post) {
+  return dispatch => {
+    ReadableAPI.addPost(post).then(newPost => dispatch({ type: ADD_POST, newPost }));
+  };
+}
+
 export const VOTE_POST = "VOTE_POST";
 export function votePost(postID, vote) {
   return dispatch => {

@@ -1,24 +1,18 @@
 import React, { Component } from "react";
-import { fetchCategories } from "../actions";
+import { fetchCategories, addPost } from "../actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import uuid from "uuid";
 
-class addPost extends Component {
+class addPostForm extends Component {
   componentDidMount() {
     this.props.fetchCategories();
   }
 
-  state = {
-    author: "",
-    category: null,
-    title: "",
-    message: ""
-  };
-
   categories() {
     if (this.props.categories.allCategories) {
       return (
-        <select name="categories" onChange={event => this.handleChange(event)}>
+        <select name="categories">
           {this.props.categories.allCategories.map(category => (
             <option key={category.name} value={category.name}>
               {category.name}
@@ -29,41 +23,35 @@ class addPost extends Component {
     }
   }
 
-  handleChange(event) {
-    let input_name = event.target.name;
+  handleSubmit(event) {
+    let author = document.getElementsByName("author")[0].value;
+    let category = document.getElementsByName("categories")[0].value;
+    let title = document.getElementsByName("title")[0].value;
+    let message = document.getElementsByName("message")[0].value;
 
-    switch (input_name) {
-      case "author":
-        this.setState({ author: event.target.value });
-        break;
+    let id = uuid();
 
-      case "categories":
-        console.log("dentro");
-        this.setState({ category: event.target.value });
-        break;
+    let post = {
+      id: id.split("-").join(""),
+      timestamp: Date.now(),
+      title: title,
+      body: message,
+      author: author,
+      category: category
+    };
 
-      case "title":
-        this.setState({ title: event.target.value });
-        break;
-
-      case "message":
-        this.setState({ message: event.target.value });
-        break;
-
-      default:
-        break;
-    }
-    console.log(event.target.name, this.state);
+    this.props.addPost(post);
+    event.preventDefault();
   }
 
-  submit(event) {
-    console.log("foobar");
+  backToPosts(event) {
+    console.log(this);
     event.preventDefault();
   }
 
   render() {
     return (
-      <form onSubmit={this.submit}>
+      <form onSubmit={event => this.handleSubmit(event)}>
         <div className="container">
           <section className="hero">
             <div className="hero-body">
@@ -84,7 +72,6 @@ class addPost extends Component {
                     className="input"
                     type="text"
                     name="author"
-                    onChange={event => this.handleChange(event)}
                     placeholder="Name"
                   />
                   <span className="icon is-small is-left">
@@ -119,7 +106,6 @@ class addPost extends Component {
                     className="input"
                     type="text"
                     name="title"
-                    onChange={event => this.handleChange(event)}
                     placeholder="Title"
                   />
                 </p>
@@ -137,7 +123,6 @@ class addPost extends Component {
                   <textarea
                     className="textarea"
                     name="message"
-                    onChange={event => this.handleChange(event)}
                     placeholder="Express yourself"
                   />
                 </div>
@@ -155,7 +140,7 @@ class addPost extends Component {
               />
             </div>
             <div className="control">
-              <button className="button is-text">Cancel</button>
+              <button className="button is-text" onClick={event => this.backToPosts(event)}>Cancel</button>
             </div>
           </div>
         </div>
@@ -164,7 +149,9 @@ class addPost extends Component {
   }
 }
 
-function mapStateToProps({ categories }) {
+function mapStateToProps({ posts, categories }) {
+  console.log(posts.addedPost)
+  
   return {
     categories: categories || []
   };
@@ -172,8 +159,9 @@ function mapStateToProps({ categories }) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchCategories: () => dispatch(fetchCategories())
+    fetchCategories: () => dispatch(fetchCategories()),
+    addPost: post => dispatch(addPost(post))
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(addPost);
+export default connect(mapStateToProps, mapDispatchToProps)(addPostForm);

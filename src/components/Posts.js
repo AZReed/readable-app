@@ -13,7 +13,6 @@ class Posts extends Component {
 
   reply = post => {
     let id = uuid();
-    console.log(id)
     let comment = {
       id: id.split("-").join(""),
       timestamp: Date.now(),

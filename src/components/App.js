@@ -1,7 +1,7 @@
 import React from "react";
 import Posts from "./Posts";
 import Categories from "./Categories";
-import addPost from "./addPost";
+import addPostForm from "./addPostForm";
 import { Route } from "react-router-dom";
 
 const App = () => {
@@ -23,7 +23,7 @@ const App = () => {
           </div>
         )}
       />
-      <Route exact path="/post" component={addPost} />
+      <Route exact path="/post" component={addPostForm} />
     </section>
   );
 };
