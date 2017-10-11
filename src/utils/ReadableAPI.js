@@ -34,6 +34,14 @@ export const votePost = (postID, status) =>
     .then(res => res.json())
     .catch(error => error);
 
+export const deletePost = postID =>
+  fetch(`${api}/posts/${postID}`, {
+    method: "DELETE",
+    headers: headers
+  })
+    .then(res => res.json())
+    .catch(error => error);
+
 export const fetchComments = postID =>
   fetch(`${api}/posts/${postID}/comments`, {
     method: "GET",

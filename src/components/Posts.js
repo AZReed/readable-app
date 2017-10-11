@@ -2,7 +2,7 @@ import React, { Component } from "react";
 //import { Item } from "semantic-ui-react";
 import { connect } from "react-redux";
 import Post from "./Post";
-import { fetchPosts, addComment } from "../actions";
+import { fetchPosts, addComment, deletePost } from "../actions";
 import uuid from "uuid";
 import { Link } from "react-router-dom";
 
@@ -28,12 +28,16 @@ class Posts extends Component {
     this.props.addComment(comment);
   };
 
+  delete = postID => {
+    this.props.deletePost(postID)
+  }
+
   render() {
     return (
       <div className="container">
         <Link to='/post'>Add Post</Link>
         {this.props.posts.map((post, index) => (
-          <Post key={post.id} post={post} reply={this.reply} />
+          <Post key={post.id} post={post} reply={this.reply} delete={this.delete} />
         ))}
       </div>
     );
@@ -56,7 +60,8 @@ function mapStateToProps({ posts, comments }) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchPosts: () => dispatch(fetchPosts()),
-    addComment: comment => dispatch(addComment(comment))
+    addComment: comment => dispatch(addComment(comment)),
+    deletePost: post => dispatch(deletePost(post))
   };
 }
 

@@ -38,9 +38,10 @@ class Post extends Component {
               {post.body}
               <br />
               <small>
+                <a onClick={() => this.props.reply(post)}>Reply</a> ·
                 <a onClick={() => this.giveMeComments(post)}>Edit</a> ·{" "}
-                <a onClick={() => this.props.reply(post)}>Reply</a> · Posted by{" "}
-                <strong>{post.author}</strong> {this.handleTime(post.timestamp)}{" "}
+                <a onClick={() => this.props.delete(post.id)}>Delete</a> ·{" "}
+                Posted by{" "} <strong>{post.author}</strong> {this.handleTime(post.timestamp)}{" "}
                 | {post.category}
               </small>
             </p>

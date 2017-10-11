@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { fetchCategories, addPost } from "../actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { Redirect } from 'react-router'
 import uuid from "uuid";
 
 class addPostForm extends Component {
@@ -46,6 +47,7 @@ class addPostForm extends Component {
 
   backToPosts(event) {
     console.log(this);
+    return <Redirect to="/" push={true}/>
     event.preventDefault();
   }
 

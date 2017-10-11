@@ -20,7 +20,9 @@ export function fetchPosts() {
 export const ADD_POST = "ADD_POST";
 export function addPost(post) {
   return dispatch => {
-    ReadableAPI.addPost(post).then(newPost => dispatch({ type: ADD_POST, newPost }));
+    ReadableAPI.addPost(post).then(newPost =>
+      dispatch({ type: ADD_POST, newPost })
+    );
   };
 }
 
@@ -29,6 +31,15 @@ export function votePost(postID, vote) {
   return dispatch => {
     ReadableAPI.votePost(postID, vote).then(post =>
       dispatch({ type: VOTE_POST, post })
+    );
+  };
+}
+
+export const DELETE_POST = "DELETE_POST";
+export function deletePost(postID) {
+  return dispatch => {
+    ReadableAPI.deletePost(postID).then(post =>
+      dispatch({ type: DELETE_POST, post })
     );
   };
 }

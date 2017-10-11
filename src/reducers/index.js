@@ -3,6 +3,7 @@ import {
   FETCH_POSTS,
   ADD_POST,
   VOTE_POST,
+  DELETE_POST,
   VOTE_COMMENT,
   ADD_COMMENT,
   DELETE_COMMENT,
@@ -29,6 +30,12 @@ function posts(state = {}, action) {
       return {
         ...state,
         addedPost: action.newPost
+      }
+
+    case DELETE_POST:
+      return {
+        ...state,
+        deletedPost: action.post
       }
 
     default:
