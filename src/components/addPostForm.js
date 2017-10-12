@@ -25,6 +25,7 @@ class addPostForm extends Component {
   }
 
   handleSubmit(event) {
+    event.preventDefault();
     let author = document.getElementsByName("author")[0].value;
     let category = document.getElementsByName("categories")[0].value;
     let title = document.getElementsByName("title")[0].value;
@@ -42,13 +43,12 @@ class addPostForm extends Component {
     };
 
     this.props.addPost(post);
-    event.preventDefault();
   }
 
   backToPosts(event) {
-    console.log(this);
-    return <Redirect to="/" push={true}/>
     event.preventDefault();
+    console.log(this);
+    //return <Redirect to="/" push={true}/>
   }
 
   render() {
@@ -138,7 +138,6 @@ class addPostForm extends Component {
                 type="submit"
                 className="button is-link"
                 value="Submit"
-                onClick={this.submit}
               />
             </div>
             <div className="control">
