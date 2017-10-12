@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import * as moment from "moment";
 import { votePost } from "../actions";
 import * as ReadableAPI from "../utils/ReadableAPI";
+import { Link } from "react-router-dom";
 
 class Post extends Component {
   componentDidMount() {
@@ -39,10 +40,10 @@ class Post extends Component {
               <br />
               <small>
                 <a onClick={() => this.props.reply(post)}>Reply</a> ·
-                <a onClick={() => this.giveMeComments(post)}>Edit</a> ·{" "}
-                <a onClick={() => this.props.delete(post.id)}>Delete</a> ·{" "}
-                Posted by{" "} <strong>{post.author}</strong> {this.handleTime(post.timestamp)}{" "}
-                | {post.category}
+                <Link to={`/post/${post.id}`}>Edit</Link> ·{" "}
+                <a onClick={() => this.props.delete(post.id)}>Delete</a> · {" "}
+                Posted by <strong>{post.author}</strong>{" "}
+                {this.handleTime(post.timestamp)} | {post.category}
               </small>
             </p>
           </div>
@@ -92,7 +93,10 @@ function mapStateToProps({ posts, comments }, ownProps) {
     ownProps.post.comments.push(comments.addedComment);
   }
 
-  if ( comments.deletedComment && comments.deletedComment.parentId === ownProps.post.id ) {
+  if (
+    comments.deletedComment &&
+    comments.deletedComment.parentId === ownProps.post.id
+  ) {
     if (ownProps.post.comments.length > 0) {
       ownProps.post.comments = ownProps.post.comments.filter(comment => {
         if (comment.id === comments.deletedComment.id) {

@@ -16,6 +16,14 @@ const headers = {
 export const fetchPosts = () =>
   fetch(`${api}/posts`, { headers }).then(res => res.json());
 
+export const fetchPost = postID =>
+  fetch(`${api}/posts/${postID}`, {
+    method: "GET",
+    headers
+  })
+    .then(res => res.json())
+    .catch(error => error);
+
 export const addPost = post =>
   fetch(`${api}/posts`, {
     method: "POST",

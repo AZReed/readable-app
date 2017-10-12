@@ -35,7 +35,7 @@ class Posts extends Component {
   render() {
     return (
       <div className="container">
-        <Link to='/post'>Add Post</Link>
+        <Link to='/post/new'>Add Post</Link>
         {this.props.posts.map((post, index) => (
           <Post key={post.id} post={post} reply={this.reply} delete={this.delete} />
         ))}

@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import {
   FETCH_POSTS,
+  FETCH_POST,
   ADD_POST,
   VOTE_POST,
   DELETE_POST,
@@ -11,14 +12,20 @@ import {
 } from "../actions";
 
 function posts(state = {}, action) {
-  // console.log("state", state);
-  // console.log("action", action);
+  //console.log("state", state);
+  //console.log("action", action);
   switch (action.type) {
     case FETCH_POSTS:
       return {
         ...state,
         allPosts: action.posts
       };
+
+    case FETCH_POST:
+      return {
+        ...state,
+        post: action.post
+      }
 
     case VOTE_POST:
       return {

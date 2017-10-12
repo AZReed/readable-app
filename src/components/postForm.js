@@ -1,19 +1,30 @@
 import React, { Component } from "react";
-import { fetchCategories, addPost } from "../actions";
+import { fetchCategories, addPost, fetchPost } from "../actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Redirect } from 'react-router'
 import uuid from "uuid";
 
-class addPostForm extends Component {
+class postForm extends Component {
+  /*   state = {
+    header: '',
+    author: this.props.post ? this.props.post.author : '',
+    category: '',
+    title: '',
+    message: ''
+  } */
+
   componentDidMount() {
     this.props.fetchCategories();
+
+    if (this.props.match.params.id) {
+      this.props.fetchPost(this.props.match.params.id);
+    }
   }
 
   categories() {
     if (this.props.categories.allCategories) {
       return (
-        <select name="categories">
+        <select value={this.handleProps("category")} name="categories">
           {this.props.categories.allCategories.map(category => (
             <option key={category.name} value={category.name}>
               {category.name}
@@ -42,6 +53,10 @@ class addPostForm extends Component {
       category: category
     };
 
+    console.log(this.props.post)
+    
+    return;
+
     this.props.addPost(post);
   }
 
@@ -51,18 +66,26 @@ class addPostForm extends Component {
     //return <Redirect to="/" push={true}/>
   }
 
-  render() {
-    return (
-      <form onSubmit={event => this.handleSubmit(event)}>
-        <div className="container">
-          <section className="hero">
-            <div className="hero-body">
-              <div className="container">
-                <h1 className="title">Add Post</h1>
-              </div>
-            </div>
-          </section>
+  handleProps(attr) {
+    if (this.props.post) {
+      return this.props.post[attr];
+    }
+    return "";
+  }
 
+  render() {
+    this.handleProps(["author", "title", "message", ""]);
+
+    return (
+      <div className="container">
+        <section className="hero">
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title">Add Post</h1>
+            </div>
+          </div>
+        </section>
+        <form onSubmit={event => this.handleSubmit(event)}>
           <div className="field is-horizontal">
             <div className="field-label is-normal">
               <label className="label">Author</label>
@@ -74,6 +97,7 @@ class addPostForm extends Component {
                     className="input"
                     type="text"
                     name="author"
+                    value={this.handleProps("author")}
                     placeholder="Name"
                   />
                   <span className="icon is-small is-left">
@@ -108,6 +132,7 @@ class addPostForm extends Component {
                     className="input"
                     type="text"
                     name="title"
+                    value={this.handleProps("title")}
                     placeholder="Title"
                   />
                 </p>
@@ -123,6 +148,7 @@ class addPostForm extends Component {
               <div className="field">
                 <div className="control">
                   <textarea
+                    value={this.handleProps("body")}
                     className="textarea"
                     name="message"
                     placeholder="Express yourself"
@@ -134,35 +160,38 @@ class addPostForm extends Component {
 
           <div className="field is-grouped">
             <div className="control">
-              <input
-                type="submit"
-                className="button is-link"
-                value="Submit"
-              />
+              <input type="submit" className="button is-link" value="Submit" />
             </div>
             <div className="control">
-              <button className="button is-text" onClick={event => this.backToPosts(event)}>Cancel</button>
+              <button
+                className="button is-text"
+                onClick={event => this.backToPosts(event)}
+              >
+                Cancel
+              </button>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     );
   }
 }
 
-function mapStateToProps({ posts, categories }) {
-  console.log(posts.addedPost)
-  
+function mapStateToProps({ posts, categories }, ownProps) {
+  //console.log(posts, ownProps.match.params.id)
+
   return {
-    categories: categories || []
+    categories: categories || [],
+    post: posts.post || []
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     fetchCategories: () => dispatch(fetchCategories()),
+    fetchPost: postID => dispatch(fetchPost(postID)),
     addPost: post => dispatch(addPost(post))
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(addPostForm);
+export default connect(mapStateToProps, mapDispatchToProps)(postForm);
