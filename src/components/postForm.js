@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchCategories, addPost, fetchPost } from "../actions";
+import { fetchCategories, addPost, fetchPost, updatePost } from "../actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import uuid from "uuid";
@@ -16,15 +16,15 @@ class postForm extends Component {
   componentDidMount() {
     this.props.fetchCategories();
 
-    if (this.props.match.params.id) {
+    if (this.props.match.params.id !== "new") {
       this.props.fetchPost(this.props.match.params.id);
     }
   }
 
-  categories() {
+  categories(post) {
     if (this.props.categories.allCategories) {
       return (
-        <select value={this.handleProps("category")} name="categories">
+        <select defaultValue={post.category} name="categories">
           {this.props.categories.allCategories.map(category => (
             <option key={category.name} value={category.name}>
               {category.name}
@@ -42,22 +42,24 @@ class postForm extends Component {
     let title = document.getElementsByName("title")[0].value;
     let message = document.getElementsByName("message")[0].value;
 
-    let id = uuid();
-
+    
     let post = {
-      id: id.split("-").join(""),
+      //id: id.split("-").join(""),
       timestamp: Date.now(),
       title: title,
       body: message,
       author: author,
       category: category
     };
-
-    console.log(this.props.post)
     
-    return;
-
-    this.props.addPost(post);
+    console.log(this.props.post);
+    if (this.props.match.params.id !== "new") {
+      this.props.updatePost(post);
+    } else {
+      let id = uuid();
+      post.id = id.split("-").join("");
+      this.props.addPost(post);
+    }
   }
 
   backToPosts(event) {
@@ -66,15 +68,15 @@ class postForm extends Component {
     //return <Redirect to="/" push={true}/>
   }
 
-  handleProps(attr) {
+/*   handleProps(attr) {
     if (this.props.post) {
       return this.props.post[attr];
     }
     return "";
-  }
+  } */
 
   render() {
-    this.handleProps(["author", "title", "message", ""]);
+    const { post } = this.props;
 
     return (
       <div className="container">
@@ -97,7 +99,7 @@ class postForm extends Component {
                     className="input"
                     type="text"
                     name="author"
-                    value={this.handleProps("author")}
+                    value={post.author}
                     placeholder="Name"
                   />
                   <span className="icon is-small is-left">
@@ -115,7 +117,7 @@ class postForm extends Component {
             <div className="field-body">
               <div className="field is-narrow">
                 <div className="control">
-                  <div className="select is-fullwidth">{this.categories()}</div>
+                  <div className="select is-fullwidth">{this.categories(post)}</div>
                 </div>
               </div>
             </div>
@@ -132,7 +134,7 @@ class postForm extends Component {
                     className="input"
                     type="text"
                     name="title"
-                    value={this.handleProps("title")}
+                    value={post.title}
                     placeholder="Title"
                   />
                 </p>
@@ -148,7 +150,7 @@ class postForm extends Component {
               <div className="field">
                 <div className="control">
                   <textarea
-                    value={this.handleProps("body")}
+                    value={post.body}
                     className="textarea"
                     name="message"
                     placeholder="Express yourself"
@@ -190,7 +192,8 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchCategories: () => dispatch(fetchCategories()),
     fetchPost: postID => dispatch(fetchPost(postID)),
-    addPost: post => dispatch(addPost(post))
+    addPost: post => dispatch(addPost(post)),
+    updatePost: post => dispatch(updatePost(post))
   };
 }
 

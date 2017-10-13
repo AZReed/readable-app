@@ -3,6 +3,7 @@ import {
   FETCH_POSTS,
   FETCH_POST,
   ADD_POST,
+  UPDATE_POST,
   VOTE_POST,
   DELETE_POST,
   VOTE_COMMENT,
@@ -17,7 +18,6 @@ function posts(state = {}, action) {
   switch (action.type) {
     case FETCH_POSTS:
       return {
-        ...state,
         allPosts: action.posts
       };
 
@@ -37,6 +37,11 @@ function posts(state = {}, action) {
       return {
         ...state,
         addedPost: action.newPost
+      }
+
+    case UPDATE_POST:
+      return {
+        foobar: action.post
       }
 
     case DELETE_POST:

@@ -33,6 +33,15 @@ export const addPost = post =>
     .then(res => res.json())
     .then(data => data);
 
+export const updatePost = post =>
+  fetch(`${api}/posts/${post.id}`, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({title: post.title, body: post.body})
+  })
+    .then(res => res.json())
+    .then(data => data);
+
 export const votePost = (postID, status) =>
   fetch(`${api}/posts/${postID}`, {
     method: "POST",
