@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { fetchCategories, addPost, fetchPost, updatePost } from "../actions";
+import { fetchCategories, addPost } from "../actions";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import uuid from "uuid";
 
-class postForm extends Component {
+class addPostForm extends Component {
   /*   state = {
     header: '',
     author: this.props.post ? this.props.post.author : '',
@@ -15,16 +14,12 @@ class postForm extends Component {
 
   componentDidMount() {
     this.props.fetchCategories();
-
-    if (this.props.match.params.id !== "new") {
-      this.props.fetchPost(this.props.match.params.id);
-    }
   }
 
-  categories(post, disabled = "") {
+  categories() {
     if (this.props.categories.allCategories) {
       return (
-        <select defaultValue={post.category} disabled name="categories">
+        <select name="categories">
           {this.props.categories.allCategories.map(category => (
             <option key={category.name} value={category.name}>
               {category.name}
@@ -43,45 +38,23 @@ class postForm extends Component {
     let message = document.getElementsByName("message")[0].value;
 
     let post = {
-      //id: id.split("-").join(""),
+      id: uuid.v4().split("-").join(""),
       timestamp: Date.now(),
       title: title,
       body: message,
       author: author,
       category: category
     };
-
-    console.log(this.props.post);
-    if (this.props.match.params.id !== "new") {
-      this.props.updatePost(post);
-    } else {
-      let id = uuid();
-      post.id = id.split("-").join("");
-      this.props.addPost(post);
-    }
+    this.props.addPost(post);
+    this.props.history.push("/");
   }
 
   backToPosts(event) {
     event.preventDefault();
-    //console.log(this.props.history.push("/"));
     this.props.history.push("/");
   }
 
-  /*   handleProps(attr) {
-    if (this.props.post) {
-      return this.props.post[attr];
-    }
-    return "";
-  } */
-
   render() {
-    const { post } = this.props;
-
-    let disabled = '';
-    if (this.props.match.params.id !== "new") {
-      disabled = 'disabled'
-    }
-
     return (
       <div className="container">
         <section className="hero">
@@ -103,8 +76,6 @@ class postForm extends Component {
                     className="input"
                     type="text"
                     name="author"
-                    value={post.author}
-                    disabled
                     placeholder="Name"
                   />
                   <span className="icon is-small is-left">
@@ -123,7 +94,7 @@ class postForm extends Component {
               <div className="field is-narrow">
                 <div className="control">
                   <div className="select is-fullwidth">
-                    {this.categories(post, disabled)}
+                    {this.categories()}
                   </div>
                 </div>
               </div>
@@ -141,7 +112,6 @@ class postForm extends Component {
                     className="input"
                     type="text"
                     name="title"
-                    value={post.title}
                     placeholder="Title"
                   />
                 </p>
@@ -157,7 +127,6 @@ class postForm extends Component {
               <div className="field">
                 <div className="control">
                   <textarea
-                    value={post.body}
                     className="textarea"
                     name="message"
                     placeholder="Express yourself"
@@ -176,7 +145,6 @@ class postForm extends Component {
                 className="button is-text"
                 onClick={event => this.backToPosts(event)}
               >
-                {/* <Redirect></Redirect> */}
                 Cancel
               </button>
             </div>
@@ -191,18 +159,15 @@ function mapStateToProps({ posts, categories }, ownProps) {
   //console.log(posts, ownProps.match.params.id)
 
   return {
-    categories: categories || [],
-    post: posts.post || []
+    categories: categories || []
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     fetchCategories: () => dispatch(fetchCategories()),
-    fetchPost: postID => dispatch(fetchPost(postID)),
-    addPost: post => dispatch(addPost(post)),
-    updatePost: post => dispatch(updatePost(post))
+    addPost: post => dispatch(addPost(post))
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(postForm);
+export default connect(mapStateToProps, mapDispatchToProps)(addPostForm);

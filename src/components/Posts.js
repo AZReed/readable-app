@@ -35,7 +35,7 @@ class Posts extends Component {
   render() {
     return (
       <div className="container">
-        <Link to='/post/new'>Add Post</Link>
+        <Link to='/addPost'>Add Post</Link>
         {this.props.posts.map((post, index) => (
           <Post key={post.id} post={post} reply={this.reply} delete={this.delete} />
         ))}
@@ -58,6 +58,7 @@ function mapStateToProps({ posts, comments }) {
 }
 
 function mapDispatchToProps(dispatch) {
+  console.log(dispatch)
   return {
     fetchPosts: () => dispatch(fetchPosts()),
     addComment: comment => dispatch(addComment(comment)),

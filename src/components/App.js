@@ -1,7 +1,9 @@
 import React from "react";
 import Posts from "./Posts";
 import Categories from "./Categories";
-import postForm from "./postForm";
+//import postForm from "./postForm";
+import addPostForm from "./addPostForm";
+import editPostForm from "./editPostForm";
 import { Route } from "react-router-dom";
 
 const App = () => {
@@ -23,7 +25,8 @@ const App = () => {
           </div>
         )}
       />
-      <Route name="postForm" path="/post/:id" component={postForm} />
+      <Route name="editPost" exact path="/editPost/:id" component={editPostForm} />
+      <Route name="addPost" exact path="/addPost" component={addPostForm} />
     </section>
   );
 };

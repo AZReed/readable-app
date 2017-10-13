@@ -1,30 +1,23 @@
 import React, { Component } from "react";
-import { fetchCategories, addPost, fetchPost, updatePost } from "../actions";
+import { fetchCategories,  fetchPost, updatePost } from "../actions";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import uuid from "uuid";
 
 class postForm extends Component {
-  /*   state = {
-    header: '',
-    author: this.props.post ? this.props.post.author : '',
-    category: '',
+   state = {
     title: '',
-    message: ''
-  } */
+    body: ''
+  }
 
   componentDidMount() {
     this.props.fetchCategories();
-
-    if (this.props.match.params.id !== "new") {
-      this.props.fetchPost(this.props.match.params.id);
-    }
+    console.log(this.props.match.params)
+    this.props.fetchPost(this.props.match.params.id);
   }
 
-  categories(post, disabled = "") {
+  categories(post) {
     if (this.props.categories.allCategories) {
       return (
-        <select defaultValue={post.category} disabled name="categories">
+        <select defaultValue={post.category} disabled={true} name="categories">
           {this.props.categories.allCategories.map(category => (
             <option key={category.name} value={category.name}>
               {category.name}
@@ -43,7 +36,6 @@ class postForm extends Component {
     let message = document.getElementsByName("message")[0].value;
 
     let post = {
-      //id: id.split("-").join(""),
       timestamp: Date.now(),
       title: title,
       body: message,
@@ -51,36 +43,25 @@ class postForm extends Component {
       category: category
     };
 
-    console.log(this.props.post);
-    if (this.props.match.params.id !== "new") {
-      this.props.updatePost(post);
-    } else {
-      let id = uuid();
-      post.id = id.split("-").join("");
-      this.props.addPost(post);
-    }
+    this.props.updatePost(post);
   }
 
   backToPosts(event) {
     event.preventDefault();
-    //console.log(this.props.history.push("/"));
     this.props.history.push("/");
   }
 
-  /*   handleProps(attr) {
-    if (this.props.post) {
-      return this.props.post[attr];
-    }
-    return "";
-  } */
+  change = event => {
+      this.setState({
+          [event.target.name]: event.target.value
+      })
+  }
 
   render() {
     const { post } = this.props;
 
-    let disabled = '';
-    if (this.props.match.params.id !== "new") {
-      disabled = 'disabled'
-    }
+    console.log(this.props);
+    console.log(this.state);
 
     return (
       <div className="container">
@@ -103,8 +84,8 @@ class postForm extends Component {
                     className="input"
                     type="text"
                     name="author"
-                    value={post.author}
-                    disabled
+                    defaultValue={post.author}
+                    disabled={true}
                     placeholder="Name"
                   />
                   <span className="icon is-small is-left">
@@ -123,7 +104,7 @@ class postForm extends Component {
               <div className="field is-narrow">
                 <div className="control">
                   <div className="select is-fullwidth">
-                    {this.categories(post, disabled)}
+                    {this.categories(post)}
                   </div>
                 </div>
               </div>
@@ -141,7 +122,8 @@ class postForm extends Component {
                     className="input"
                     type="text"
                     name="title"
-                    value={post.title}
+                    //defaultValue={post.title}
+                    value={this.state.title}
                     placeholder="Title"
                   />
                 </p>
@@ -157,7 +139,9 @@ class postForm extends Component {
               <div className="field">
                 <div className="control">
                   <textarea
-                    value={post.body}
+                    //defaultValue={post.body}
+                    value={this.state.body}
+                    onChange={e => this.change(e)}
                     className="textarea"
                     name="message"
                     placeholder="Express yourself"
@@ -190,6 +174,8 @@ class postForm extends Component {
 function mapStateToProps({ posts, categories }, ownProps) {
   //console.log(posts, ownProps.match.params.id)
 
+  console.log(this)
+
   return {
     categories: categories || [],
     post: posts.post || []
@@ -200,7 +186,6 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchCategories: () => dispatch(fetchCategories()),
     fetchPost: postID => dispatch(fetchPost(postID)),
-    addPost: post => dispatch(addPost(post)),
     updatePost: post => dispatch(updatePost(post))
   };
 }
