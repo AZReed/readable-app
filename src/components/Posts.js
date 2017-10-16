@@ -45,15 +45,20 @@ class Posts extends Component {
 }
 
 function mapStateToProps({ posts, comments }) {
-  console.log("mapState posts");
+  console.log("mapState posts", posts);
 
-/*   let filteredPosts;
-  if (posts.allPosts) {
-    filteredPosts = posts.allPosts.map(post => post.deleted)
+  let filteredPosts;
+  if (posts.deletedPost) {
+    filteredPosts = posts.allPosts.filter(post => {
+      if (post.id === posts.deletedPost.id) {
+        return false;
+      }
+      return true;
+    })
   }
- */
+ 
   return {
-    posts: posts.allPosts || []
+    posts: filteredPosts || posts.allPosts || []
   };
 }
 
