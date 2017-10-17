@@ -23,6 +23,10 @@ class Categories extends Component {
     this.setState({indexActive: index})
   }
 
+  handleReset() {
+    this.setState({indexActive: -1})
+  }
+
   render() {
 
     return (
@@ -44,7 +48,7 @@ class Categories extends Component {
         ))}
 
         <div className="panel-block">
-          <button className="button is-link is-outlined is-fullwidth">
+          <button onClick={() => this.handleReset()} className="button is-link is-outlined is-fullwidth">
             reset all filters
           </button>
         </div>
