@@ -40,7 +40,6 @@ export const updatePost = post =>
     body: JSON.stringify({title: post.title, body: post.body})
   })
     .then(res => res.json())
-    .then(data => data);
 
 export const votePost = (postID, status) =>
   fetch(`${api}/posts/${postID}`, {
