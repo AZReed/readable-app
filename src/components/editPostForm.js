@@ -1,23 +1,33 @@
 import React, { Component } from "react";
-import { fetchCategories,  fetchPost, updatePost } from "../actions";
+import { fetchCategories, fetchPost, updatePost } from "../actions";
 import { connect } from "react-redux";
 
 class postForm extends Component {
-   state = {
-    title: '',
-    body: ''
-  }
+  state = {
+    title: "",
+    body: ""
+  };
 
   componentDidMount() {
     this.props.fetchCategories();
-    console.log(this.props.match.params)
     this.props.fetchPost(this.props.match.params.id);
   }
 
-  categories(post) {
+  componentDidUpdate(prevProps, prevState) {
+    //console.log(this.props.post)
+    if (this.state.body === "" && this.props.post.id) {
+      console.log(this.props.post)
+      this.setState({ 
+        body: this.props.post.body,
+        title: this.props.post.title
+       });
+    }
+  }
+
+  categories() {
     if (this.props.categories.allCategories) {
       return (
-        <select defaultValue={post.category} disabled={true} name="categories">
+        <select value={this.props.post.category} disabled={true} name="categories">
           {this.props.categories.allCategories.map(category => (
             <option key={category.name} value={category.name}>
               {category.name}
@@ -30,20 +40,23 @@ class postForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    let id = document.getElementsByName("id")[0].value;
     let author = document.getElementsByName("author")[0].value;
     let category = document.getElementsByName("categories")[0].value;
     let title = document.getElementsByName("title")[0].value;
-    let message = document.getElementsByName("message")[0].value;
+    let body = document.getElementsByName("body")[0].value;
 
     let post = {
+      id: id,
       timestamp: Date.now(),
       title: title,
-      body: message,
+      body: body,
       author: author,
       category: category
     };
 
     this.props.updatePost(post);
+    this.props.history.push("/");
   }
 
   backToPosts(event) {
@@ -52,17 +65,12 @@ class postForm extends Component {
   }
 
   change = event => {
-      this.setState({
-          [event.target.name]: event.target.value
-      })
-  }
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
 
   render() {
-    const { post } = this.props;
-
-    console.log(this.props);
-    console.log(this.state);
-
     return (
       <div className="container">
         <section className="hero">
@@ -72,7 +80,7 @@ class postForm extends Component {
             </div>
           </div>
         </section>
-        {post && (<form onSubmit={event => this.handleSubmit(event)}>
+        <form onSubmit={event => this.handleSubmit(event)}>
           <div className="field is-horizontal">
             <div className="field-label is-normal">
               <label className="label">Author</label>
@@ -84,7 +92,7 @@ class postForm extends Component {
                     className="input"
                     type="text"
                     name="author"
-                    defaultValue={post.author}
+                    value={this.props.post.author}
                     disabled={true}
                     placeholder="Name"
                   />
@@ -104,7 +112,7 @@ class postForm extends Component {
               <div className="field is-narrow">
                 <div className="control">
                   <div className="select is-fullwidth">
-                    {this.categories(post)}
+                    {this.categories()}
                   </div>
                 </div>
               </div>
@@ -122,8 +130,8 @@ class postForm extends Component {
                     className="input"
                     type="text"
                     name="title"
-                    //defaultValue={post.title}
-                    defaultValue={post.title}
+                    onChange={(e) => this.change(e)}
+                    value={this.state.title}
                     placeholder="Title"
                   />
                 </p>
@@ -139,11 +147,10 @@ class postForm extends Component {
               <div className="field">
                 <div className="control">
                   <textarea
-                    //defaultValue={post.body}
-                    defaultValue={post.body}
+                    value={this.state.body}
                     onChange={e => this.change(e)}
                     className="textarea"
-                    name="message"
+                    name="body"
                     placeholder="Express yourself"
                   />
                 </div>
@@ -160,12 +167,12 @@ class postForm extends Component {
                 className="button is-text"
                 onClick={event => this.backToPosts(event)}
               >
-                {/* <Redirect></Redirect> */}
                 Cancel
               </button>
             </div>
           </div>
-        </form>)}
+          <input hidden value={this.props.post.id} name="id"/>
+        </form>
       </div>
     );
   }
@@ -173,8 +180,6 @@ class postForm extends Component {
 
 function mapStateToProps({ posts, categories }, ownProps) {
   //console.log(posts, ownProps.match.params.id)
-
-  console.log(this)
 
   return {
     categories: categories || [],
