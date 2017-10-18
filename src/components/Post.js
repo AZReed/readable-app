@@ -40,7 +40,7 @@ class Post extends Component {
               <br />
               <small>
                 <a onClick={() => this.props.reply(post)}>Reply</a> ·
-                <Link to={`/editPost/${post.id}`}>Edit</Link> ·{" "}
+                <Link to={`/editPost/${post.id}`}>Edit</Link> · {" "}
                 <a onClick={() => this.props.delete(post.id)}>Delete</a> · {" "}
                 Posted by <strong>{post.author}</strong>{" "}
                 {this.handleTime(post.timestamp)} | {post.category}

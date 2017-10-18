@@ -17,6 +17,23 @@ export function fetchPosts() {
   };
 }
 
+export const FETCH_CATEGORY_POSTS = "FETCH_CATEGORY_POSTS";
+export function fetchCategoryPosts(category) {
+  return dispatch => {
+    ReadableAPI.fetchCategoryPosts(category)
+      .then(posts =>
+        Promise.all(
+          posts.map(post =>
+            ReadableAPI.fetchComments(post.id)
+              .then(comments => (post.comments = comments))
+              .then(() => post)
+          )
+        )
+      )
+      .then(posts => dispatch({ type: FETCH_CATEGORY_POSTS, posts }));
+  };
+}
+
 export const FETCH_POST = "FETCH_POST";
 export function fetchPost(postID) {
   return dispatch => {

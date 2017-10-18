@@ -2,13 +2,30 @@ import React, { Component } from "react";
 //import { Item } from "semantic-ui-react";
 import { connect } from "react-redux";
 import Post from "./Post";
-import { fetchPosts, addComment, deletePost } from "../actions";
+import {
+  fetchPosts,
+  addComment,
+  deletePost,
+  fetchCategoryPosts
+} from "../actions";
 import uuid from "uuid";
 import { Link } from "react-router-dom";
 
 class Posts extends Component {
   componentDidMount() {
-    this.props.fetchPosts();
+    const category = this.props.category;
+    if (category && category.length > 0) {
+      this.props.fetchCategoryPosts(category);
+    } else {
+      this.props.fetchPosts();
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const category = this.props.category;
+    if (prevProps.category !== category && (category && category.length > 0)) {
+      this.props.fetchCategoryPosts(category);
+    }
   }
 
   reply = post => {
@@ -60,16 +77,19 @@ function mapStateToProps({ posts, comments }) {
     });
 
   return {
-    posts: (updatedPosts && updatedPosts.filter(post => !post.deleted)) || []
+    posts:
+      posts.categoryPosts ||
+      (updatedPosts && updatedPosts.filter(post => !post.deleted)) ||
+      []
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  console.log(dispatch);
   return {
     fetchPosts: () => dispatch(fetchPosts()),
     addComment: comment => dispatch(addComment(comment)),
-    deletePost: post => dispatch(deletePost(post))
+    deletePost: post => dispatch(deletePost(post)),
+    fetchCategoryPosts: category => dispatch(fetchCategoryPosts(category))
   };
 }
 

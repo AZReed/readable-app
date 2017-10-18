@@ -1,18 +1,26 @@
 import React, { Component } from "react";
 import Posts from "./Posts";
-import { fetchPosts } from "../actions";
+import Categories from "./Categories";
+//import { fetchPosts } from "../actions";
 import { connect } from "react-redux";
 
 class Home extends Component {
   componentDidMount() {
-    this.props.fetchPosts();
+    //this.props.fetchPosts();
+    //console.log(this.props)
   }
 
   render() {
     return (
-      <div>
-        <h3>Readable App Home</h3>
-        <Posts />
+      <div className="container">
+        <div className="columns">
+          <div className="column is-3">
+            <Categories/>
+          </div>
+          <div className="column is-9">
+            <Posts/>
+          </div>
+        </div>
       </div>
     );
   }
@@ -20,7 +28,7 @@ class Home extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchPosts: () => dispatch(fetchPosts())
+    //fetchPosts: () => dispatch(fetchPosts())
   };
 }
 

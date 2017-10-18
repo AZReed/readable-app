@@ -24,6 +24,14 @@ export const fetchPost = postID =>
     .then(res => res.json())
     .catch(error => error);
 
+export const fetchCategoryPosts = category =>
+  fetch(`${api}/${category}/posts`, {
+    method: "GET",
+    headers
+  })
+    .then(res => res.json())
+    .catch(error => error);
+
 export const addPost = post =>
   fetch(`${api}/posts`, {
     method: "POST",
@@ -31,7 +39,7 @@ export const addPost = post =>
     body: JSON.stringify(post)
   })
     .then(res => res.json())
-    .then(data => data);
+    .catch(error => error);
 
 export const updatePost = post =>
   fetch(`${api}/posts/${post.id}`, {

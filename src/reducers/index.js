@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import {
   FETCH_POSTS,
   FETCH_POST,
+  FETCH_CATEGORY_POSTS,
   ADD_POST,
   UPDATE_POST,
   VOTE_POST,
@@ -25,6 +26,12 @@ function posts(state = {}, action) {
       return {
         ...state,
         post: action.post
+      }
+
+    case FETCH_CATEGORY_POSTS:
+      return {
+        ...state,
+        categoryPosts: action.posts
       }
 
     case VOTE_POST:

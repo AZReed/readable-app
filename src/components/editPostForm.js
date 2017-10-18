@@ -14,9 +14,7 @@ class postForm extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    //console.log(this.props.post)
     if (this.state.body === "" && this.props.post.id) {
-      console.log(this.props.post)
       this.setState({ 
         body: this.props.post.body,
         title: this.props.post.title

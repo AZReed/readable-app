@@ -1,34 +1,37 @@
 import React, { Component } from "react";
 import { fetchCategories } from "../actions";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { withRouter } from 'react-router'
 
 class Categories extends Component {
   state = {
-    indexActive: -1
-  }
+    activeCategory: ''
+  };
 
   componentDidMount() {
     this.props.fetchCategories();
+    console.log(this.props)
+
+    this.setState({activeCategory: this.props.category})
   }
 
-  isActive(index) {
-    if (index === this.state.indexActive) {
+  isActive(category) {
+    if (category === this.state.activeCategory) {
       return "panel-block is-active";
     }
     return "panel-block";
   }
 
-  handleCategory(e, category, index) {
-    console.log(e.target, category)
-    this.setState({indexActive: index})
+  handleCategory(category) {
+    this.setState({ activeCategory: category });
   }
 
   handleReset() {
-    this.setState({indexActive: -1})
+    //this.setState({ activeCategory: '' });
   }
 
   render() {
-
     return (
       <nav className="panel">
         <p className="panel-heading">Readable</p>
@@ -38,17 +41,25 @@ class Categories extends Component {
           <a>filters</a>
         </p>
 
-        {this.props.categories.map((category, index) => (
-          <a key={category.name} onClick={(e) => this.handleCategory(e, category.path, index)} className={this.isActive(index)}>
+        {this.props.categories.map( category => (
+          <Link
+            to={`/${category.path}/posts`}
+            key={category.name}
+            onClick={e => this.handleCategory(category.name)}
+            className={this.isActive(category.name)}
+          >
             <span className="panel-icon">
               <i className="fa fa-book" />
             </span>
             {category.name}
-          </a>
+          </Link>
         ))}
 
         <div className="panel-block">
-          <button onClick={() => this.handleReset()} className="button is-link is-outlined is-fullwidth">
+          <button
+            onClick={() => this.handleReset()}
+            className="button is-link is-outlined is-fullwidth"
+          >
             reset all filters
           </button>
         </div>
@@ -69,4 +80,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default withRouter( connect(mapStateToProps, mapDispatchToProps)(Categories) );
