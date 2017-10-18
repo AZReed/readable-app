@@ -29,15 +29,20 @@ class Posts extends Component {
   };
 
   delete = postID => {
-    this.props.deletePost(postID)
-  }
+    this.props.deletePost(postID);
+  };
 
   render() {
     return (
       <div className="container">
-        <Link to='/addPost'>Add Post</Link>
+        <Link to="/addPost">Add Post</Link>
         {this.props.posts.map((post, index) => (
-          <Post key={post.id} post={post} reply={this.reply} delete={this.delete} />
+          <Post
+            key={post.id}
+            post={post}
+            reply={this.reply}
+            delete={this.delete}
+          />
         ))}
       </div>
     );
@@ -45,25 +50,22 @@ class Posts extends Component {
 }
 
 function mapStateToProps({ posts, comments }) {
-  console.log("mapState posts", posts);
-
-  let filteredPosts;
-  if (posts.deletedPost) {
-    filteredPosts = posts.allPosts.filter(post => {
-      if (post.id === posts.deletedPost.id) {
-        return false;
+  let updatedPosts =
+    posts.allPosts &&
+    posts.allPosts.map(post => {
+      if (posts.deletedPost && post.id === posts.deletedPost.id) {
+        post.deleted = true;
       }
-      return true;
-    })
-  }
- 
+      return post;
+    });
+
   return {
-    posts: filteredPosts || posts.allPosts || []
+    posts: (updatedPosts && updatedPosts.filter(post => !post.deleted)) || []
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  console.log(dispatch)
+  console.log(dispatch);
   return {
     fetchPosts: () => dispatch(fetchPosts()),
     addComment: comment => dispatch(addComment(comment)),
