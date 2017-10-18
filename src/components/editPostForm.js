@@ -72,7 +72,7 @@ class postForm extends Component {
             </div>
           </div>
         </section>
-        <form onSubmit={event => this.handleSubmit(event)}>
+        {post && (<form onSubmit={event => this.handleSubmit(event)}>
           <div className="field is-horizontal">
             <div className="field-label is-normal">
               <label className="label">Author</label>
@@ -123,7 +123,7 @@ class postForm extends Component {
                     type="text"
                     name="title"
                     //defaultValue={post.title}
-                    value={this.state.title}
+                    defaultValue={post.title}
                     placeholder="Title"
                   />
                 </p>
@@ -140,7 +140,7 @@ class postForm extends Component {
                 <div className="control">
                   <textarea
                     //defaultValue={post.body}
-                    value={this.state.body}
+                    defaultValue={post.body}
                     onChange={e => this.change(e)}
                     className="textarea"
                     name="message"
@@ -165,7 +165,7 @@ class postForm extends Component {
               </button>
             </div>
           </div>
-        </form>
+        </form>)}
       </div>
     );
   }
