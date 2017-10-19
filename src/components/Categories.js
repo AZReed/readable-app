@@ -2,18 +2,16 @@ import React, { Component } from "react";
 import { fetchCategories } from "../actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { withRouter } from 'react-router'
+import { withRouter } from "react-router";
 
 class Categories extends Component {
   state = {
-    activeCategory: ''
+    activeCategory: ""
   };
 
   componentDidMount() {
     this.props.fetchCategories();
-    console.log(this.props)
-
-    this.setState({activeCategory: this.props.category})
+    this.setState({ activeCategory: this.props.match.params.category });
   }
 
   isActive(category) {
@@ -29,6 +27,7 @@ class Categories extends Component {
 
   handleReset() {
     //this.setState({ activeCategory: '' });
+    this.props.history.push("/");
   }
 
   render() {
@@ -41,7 +40,7 @@ class Categories extends Component {
           <a>filters</a>
         </p>
 
-        {this.props.categories.map( category => (
+        {this.props.categories.map(category => (
           <Link
             to={`/${category.path}/posts`}
             key={category.name}
@@ -80,4 +79,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter( connect(mapStateToProps, mapDispatchToProps)(Categories) );
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Categories)
+);

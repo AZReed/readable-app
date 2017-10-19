@@ -10,10 +10,11 @@ import {
 } from "../actions";
 import uuid from "uuid";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 
 class Posts extends Component {
   componentDidMount() {
-    const category = this.props.category;
+    const category = this.props.match.params.category;
     if (category && category.length > 0) {
       this.props.fetchCategoryPosts(category);
     } else {
@@ -22,8 +23,9 @@ class Posts extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const category = this.props.category;
-    if (prevProps.category !== category && (category && category.length > 0)) {
+    const category = this.props.match.params.category;
+    console.log(prevProps);
+    if (prevProps.match.params.category !== category && (category && category.length > 0)) {
       this.props.fetchCategoryPosts(category);
     }
   }
@@ -93,4 +95,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Posts);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Posts));
