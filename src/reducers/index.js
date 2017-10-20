@@ -10,8 +10,30 @@ import {
   VOTE_COMMENT,
   ADD_COMMENT,
   DELETE_COMMENT,
-  FETCH_CATEGORIES
+  FETCH_CATEGORIES,
+  SORT_BY,
+  CLEAR_SORT
 } from "../actions";
+
+function operator(op) {
+  switch (op) {
+    case ">":
+      return function(a, b) {
+        return a - b;
+      };
+      break;
+    case "<":
+      return function(a, b) {
+        return b - a;
+      };
+
+    case "clear":
+      return function() {};
+
+    default:
+      break;
+  }
+}
 
 function posts(state = {}, action) {
   //console.log("state", state);
@@ -26,13 +48,14 @@ function posts(state = {}, action) {
       return {
         ...state,
         post: action.post
-      }
+      };
 
     case FETCH_CATEGORY_POSTS:
       return {
         ...state,
-        categoryPosts: action.posts
-      }
+        //categoryPosts: action.posts
+        allPosts: action.posts
+      };
 
     case VOTE_POST:
       return {
@@ -44,18 +67,33 @@ function posts(state = {}, action) {
       return {
         ...state,
         addedPost: action.newPost
-      }
+      };
 
     case UPDATE_POST:
       return {
-        foobar: action.post
-      }
+        updatedPost: action.post
+      };
 
     case DELETE_POST:
       return {
         ...state,
         deletedPost: action.post
-      }
+      };
+
+    case SORT_BY:
+      //console.log(action);
+      //let posts = Object.assign({}, state.allPosts);
+      //console.log(posts)
+      return {
+        ...state,
+        sortedPost: state.allPosts.sort((a, b) => b[action.arg] - a[action.arg])
+      };
+
+    case CLEAR_SORT:
+      console.log(state);
+      return {
+        ...state
+      };
 
     default:
       return { ...state };

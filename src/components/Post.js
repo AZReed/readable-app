@@ -4,7 +4,7 @@ import Comments from "./Comments";
 import { connect } from "react-redux";
 import * as moment from "moment";
 import { votePost } from "../actions";
-import * as ReadableAPI from "../utils/ReadableAPI";
+//import * as ReadableAPI from "../utils/ReadableAPI";
 import { Link } from "react-router-dom";
 
 class Post extends Component {
@@ -13,11 +13,11 @@ class Post extends Component {
     //this.fetchComments()
   }
 
-  giveMeComments(post) {
+/*   giveMeComments(post) {
     ReadableAPI.fetchComments(post.id)
       .then(comments => (post.comments = comments))
       .then(() => console.log(post));
-  }
+  } */
 
   handleTime = timestamp => {
     return moment(timestamp).fromNow();

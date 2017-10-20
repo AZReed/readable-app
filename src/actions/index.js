@@ -114,3 +114,17 @@ export function fetchCategories() {
     );
   };
 }
+
+export const SORT_BY = "SORT_BY";
+export function sortBy(arg) {
+  return dispatch => {
+    dispatch({ type: SORT_BY, arg });
+  };
+}
+
+export const CLEAR_SORT = "CLEAR_SORT";
+export function clearSort() {
+  return dispatch => {
+    dispatch({ type: CLEAR_SORT });
+  };
+}

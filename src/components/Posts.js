@@ -24,7 +24,10 @@ class Posts extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const category = this.props.match.params.category;
-    if (prevProps.match.params.category !== category && (category && category.length > 0)) {
+    if (
+      prevProps.match.params.category !== category &&
+      (category && category.length > 0)
+    ) {
       this.props.fetchCategoryPosts(category);
     }
   }
@@ -67,22 +70,24 @@ class Posts extends Component {
   }
 }
 
-function mapStateToProps({ posts, comments }) {
-  let updatedPosts =
-    posts.allPosts &&
-    posts.allPosts.map(post => {
+function mapStateToProps({ posts, comments }, ownProps) {
+  //console.log(ownProps)
+  posts.allPosts &&
+    posts.allPosts.forEach(post => {
       if (posts.deletedPost && post.id === posts.deletedPost.id) {
         post.deleted = true;
       }
-      return post;
     });
 
   return {
+    posts: (posts.allPosts && posts.allPosts.filter(post => !post.deleted)) || []
+  };
+  /*   return {
     posts:
       posts.categoryPosts ||
       (updatedPosts && updatedPosts.filter(post => !post.deleted)) ||
       []
-  };
+  }; */
 }
 
 function mapDispatchToProps(dispatch) {
