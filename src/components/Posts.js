@@ -24,7 +24,6 @@ class Posts extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const category = this.props.match.params.category;
-    console.log(prevProps);
     if (prevProps.match.params.category !== category && (category && category.length > 0)) {
       this.props.fetchCategoryPosts(category);
     }
