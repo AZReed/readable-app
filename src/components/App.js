@@ -4,6 +4,7 @@ import React from "react";
 //import postForm from "./postForm";
 import addPostForm from "./addPostForm";
 import editPostForm from "./editPostForm";
+import commentForm from "./commentForm";
 import Home from "./Home";
 import { Route } from "react-router-dom";
 
@@ -13,6 +14,7 @@ const App = () => {
       <Route exact path="/" component={Home} />
       <Route exact path="/editPost/:id" component={editPostForm} />
       <Route exact path="/addPost" component={addPostForm} />
+      <Route exact path="/commentForm/:id" component={commentForm} />
       <Route exact path="/:category/posts" component={Home} />
     </section>
   );

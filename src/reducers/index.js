@@ -15,7 +15,7 @@ import {
   CLEAR_SORT
 } from "../actions";
 
-function operator(op) {
+/* function operator(op) {
   switch (op) {
     case ">":
       return function(a, b) {
@@ -33,7 +33,7 @@ function operator(op) {
     default:
       break;
   }
-}
+} */
 
 function posts(state = {}, action) {
   //console.log("state", state);

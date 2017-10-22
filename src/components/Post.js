@@ -3,22 +3,9 @@ import VoteScore from "./VoteScore";
 import Comments from "./Comments";
 import { connect } from "react-redux";
 import * as moment from "moment";
-import { votePost } from "../actions";
-//import * as ReadableAPI from "../utils/ReadableAPI";
 import { Link } from "react-router-dom";
 
 class Post extends Component {
-  componentDidMount() {
-    //console.log(this.props)
-    //this.fetchComments()
-  }
-
-/*   giveMeComments(post) {
-    ReadableAPI.fetchComments(post.id)
-      .then(comments => (post.comments = comments))
-      .then(() => console.log(post));
-  } */
-
   handleTime = timestamp => {
     return moment(timestamp).fromNow();
   };
@@ -39,7 +26,7 @@ class Post extends Component {
               {post.body}
               <br />
               <small>
-                <a onClick={() => this.props.reply(post)}>Reply</a> ·
+                <Link to={`/commentForm/${post.id}`}>Reply</Link> ·
                 <Link to={`/editPost/${post.id}`}>Edit</Link> · {" "}
                 <a onClick={() => this.props.delete(post.id)}>Delete</a> · {" "}
                 Posted by <strong>{post.author}</strong>{" "}
@@ -50,29 +37,6 @@ class Post extends Component {
 
           <Comments post={post} handleTime={this.handleTime} />
         </div>
-        {/*       
-      <div className="box">
-        <div id="post">
-          <VoteScore
-            voteScore={post.voteScore}
-            vote={votePost}
-            id={post.id}
-          />
-          <div>
-            <div>{post.title}</div>
-            <div>{post.body}</div>
-            <div>
-              Posted by {post.author} {this.handleTime(post.timestamp)}|{" "}
-              {post.comments.length} comments |
-              <div>
-                {post.category}
-              </div>
-            </div>
-          </div>
-
-          <Comments post={post} handleTime={this.handleTime} />
-        </div>
-      </div>*/}
       </article>
     );
   }
@@ -86,12 +50,12 @@ function mapStateToProps({ posts, comments }, ownProps) {
     ownProps.post.voteScore = posts.updatedPost.voteScore;
   }
 
-  if (
+/*   if (
     comments.addedComment &&
     comments.addedComment.parentId === ownProps.post.id
   ) {
     ownProps.post.comments.push(comments.addedComment);
-  }
+  } */
 
   if (
     comments.deletedComment &&
@@ -114,11 +78,4 @@ function mapStateToProps({ posts, comments }, ownProps) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    votePost: (postID, vote) => dispatch(votePost(postID, vote)) //Cambiar el vote post a posts para que no lo importe cada rendericazion de post
-    //voteComment: (postID, vote) => dispatch(voteComment(postID, vote))
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Post);
+export default connect(mapStateToProps, null)(Post);

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-//import { Item } from "semantic-ui-react";
 import { connect } from "react-redux";
 import Post from "./Post";
 import {
   fetchPosts,
-  addComment,
+  //addComment,
   deletePost,
+  votePost,
   fetchCategoryPosts
 } from "../actions";
 import uuid from "uuid";
@@ -46,7 +46,7 @@ class Posts extends Component {
       parentDeleted: false,
       voteScore: 1
     };
-    this.props.addComment(comment);
+    //this.props.addComment(comment);
   };
 
   delete = postID => {
@@ -61,8 +61,9 @@ class Posts extends Component {
           <Post
             key={post.id}
             post={post}
-            reply={this.reply}
-            delete={this.delete}
+            //reply={this.reply}
+            delete={this.props.deletePost}
+            votePost={this.props.votePost}
           />
         ))}
       </div>
@@ -93,8 +94,9 @@ function mapStateToProps({ posts, comments }, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchPosts: () => dispatch(fetchPosts()),
-    addComment: comment => dispatch(addComment(comment)),
+    //addComment: comment => dispatch(addComment(comment)),
     deletePost: post => dispatch(deletePost(post)),
+    votePost: (postID, vote) => dispatch(votePost(postID, vote)),
     fetchCategoryPosts: category => dispatch(fetchCategoryPosts(category))
   };
 }
