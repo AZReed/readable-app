@@ -40,8 +40,6 @@ class Posts extends Component {
 function mapStateToProps({ posts, comments }, ownProps) {
   //console.log(ownProps)
 
-  console.log(posts.sortedPost);
-
   posts.allPosts &&
     posts.allPosts.forEach(post => {
       if (posts.deletedPost && post.id === posts.deletedPost.id) {
@@ -51,9 +49,8 @@ function mapStateToProps({ posts, comments }, ownProps) {
 
   return {
     posts:
-      (posts.allPosts && posts.allPosts.filter(post => !post.deleted)) || []
+      posts.sortedPost || (posts.allPosts && posts.allPosts.filter(post => !post.deleted)) || []
   };
-
 }
 
 function mapDispatchToProps(dispatch) {

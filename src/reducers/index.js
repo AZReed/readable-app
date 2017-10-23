@@ -52,6 +52,7 @@ function posts(state = {}, action) {
       };
 
     case FETCH_CATEGORY_POSTS:
+      delete state.sortedPost;
       return {
         ...state,
         //categoryPosts: action.posts
@@ -90,7 +91,7 @@ function posts(state = {}, action) {
       };
 
     case CLEAR_SORT:
-      console.log(state);
+      delete state.sortedPost;
       return {
         ...state
       };
