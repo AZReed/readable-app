@@ -83,11 +83,10 @@ function posts(state = {}, action) {
 
     case SORT_BY:
       //console.log(action);
-      //let posts = Object.assign({}, state.allPosts);
-      //console.log(posts)
+      let posts = Object.assign([], state.allPosts);
       return {
         ...state,
-        sortedPost: state.allPosts.sort((a, b) => b[action.arg] - a[action.arg])
+        sortedPost: posts.sort((a, b) => b[action.arg] - a[action.arg])
       };
 
     case CLEAR_SORT:
@@ -108,12 +107,12 @@ function comments(state = {}, action) {
       return {
         allComments: action.comments
       }
-    
+
     case FETCH_COMMENT:
       return {
         editComment: action.comment
       }
-    
+
     case VOTE_COMMENT:
       return {
         ...state,

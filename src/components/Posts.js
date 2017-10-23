@@ -39,6 +39,9 @@ class Posts extends Component {
 
 function mapStateToProps({ posts, comments }, ownProps) {
   //console.log(ownProps)
+
+  console.log(posts.sortedPost);
+
   posts.allPosts &&
     posts.allPosts.forEach(post => {
       if (posts.deletedPost && post.id === posts.deletedPost.id) {

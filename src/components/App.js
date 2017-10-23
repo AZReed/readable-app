@@ -14,9 +14,13 @@ const App = () => {
   return (
     <section className="section">
       <div className="container">
-        <h1 className="title">
-          Readable App
-        </h1>
+        <section className="hero level">
+          <div className="hero-body level-item has-text-centered">
+            <div className="container">
+              <h1 className="title">Readable App</h1>
+            </div>
+          </div>
+        </section>
         <Route exact path="/" component={Home} />
         <Route path="/posts/:category/:id" component={Post} />
         <Route exact path="/editPost/:id" component={editPostForm} />

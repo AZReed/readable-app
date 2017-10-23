@@ -42,7 +42,7 @@ class Categories extends Component {
   }
 
   handleResetSort(type) {
-    console.log(type);
+    console.log(type, this.props);
     this.props.clearSort()
   }
 
@@ -95,7 +95,7 @@ class Categories extends Component {
         </a>
         <div className="panel-block">
           <button
-            onClick={() => this.handleReset()}
+            onClick={() => this.handleResetSort()}
             className="button is-link is-outlined is-fullwidth"
           >
             reset all filters
