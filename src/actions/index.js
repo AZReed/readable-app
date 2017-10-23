@@ -79,6 +79,15 @@ export function deletePost(postID) {
   };
 }
 
+export const FETCH_COMMENT = "FETCH_COMMENT";
+export function fetchComment(commentID) {
+  return dispatch => {
+    ReadableAPI.fetchComment(commentID).then(comment =>
+      dispatch({ type: FETCH_COMMENT, comment })
+    );
+  };
+}
+
 export const VOTE_COMMENT = "VOTE_COMMENT";
 export function voteComment(postID, vote) {
   return dispatch => {
@@ -93,6 +102,15 @@ export function addComment(comment) {
   return dispatch => {
     ReadableAPI.addComment(comment).then(comment =>
       dispatch({ type: ADD_COMMENT, comment })
+    );
+  };
+}
+
+export const UPDATE_COMMENT = "UPDATE_COMMENT";
+export function updateComment(comment) {
+  return dispatch => {
+    ReadableAPI.updateComment(comment).then(comment =>
+      dispatch({ type: UPDATE_COMMENT, comment })
     );
   };
 }

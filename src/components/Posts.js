@@ -3,12 +3,10 @@ import { connect } from "react-redux";
 import Post from "./Post";
 import {
   fetchPosts,
-  //addComment,
   deletePost,
   votePost,
   fetchCategoryPosts
 } from "../actions";
-import uuid from "uuid";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 
@@ -32,23 +30,6 @@ class Posts extends Component {
     }
   }
 
-  reply = post => {
-    let id = uuid();
-    let comment = {
-      id: id.split("-").join(""),
-      timestamp: Date.now(),
-      title: "foobar",
-      body: "body body",
-      author: "Alejandro Zamora",
-      category: "udacity",
-      parentId: post.id,
-      deleted: false,
-      parentDeleted: false,
-      voteScore: 1
-    };
-    //this.props.addComment(comment);
-  };
-
   delete = postID => {
     this.props.deletePost(postID);
   };
@@ -61,7 +42,6 @@ class Posts extends Component {
           <Post
             key={post.id}
             post={post}
-            //reply={this.reply}
             delete={this.props.deletePost}
             votePost={this.props.votePost}
           />
@@ -81,7 +61,8 @@ function mapStateToProps({ posts, comments }, ownProps) {
     });
 
   return {
-    posts: (posts.allPosts && posts.allPosts.filter(post => !post.deleted)) || []
+    posts:
+      (posts.allPosts && posts.allPosts.filter(post => !post.deleted)) || []
   };
   /*   return {
     posts:
@@ -94,7 +75,6 @@ function mapStateToProps({ posts, comments }, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchPosts: () => dispatch(fetchPosts()),
-    //addComment: comment => dispatch(addComment(comment)),
     deletePost: post => dispatch(deletePost(post)),
     votePost: (postID, vote) => dispatch(votePost(postID, vote)),
     fetchCategoryPosts: category => dispatch(fetchCategoryPosts(category))

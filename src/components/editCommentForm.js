@@ -1,12 +1,27 @@
 import React, { Component } from "react";
 //import { fetchPost, addComment } from "../actions";
-import { addComment } from "../actions";
+import { updateComment, fetchComment } from "../actions";
 import { connect } from "react-redux";
-import uuid from "uuid";
+//import uuid from "uuid";
 
-class commentForm extends Component {
+class editCommentForm extends Component {
+  state = {
+    author: "",
+    body: ""
+  };
+
   componentDidMount() {
-    //this.props.fetchPost(this.props.match.params.id);
+    this.props.fetchComment(this.props.match.params.id);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(this.props);
+    if (this.state.body === "" && this.props.comment.id) {
+      this.setState({
+        body: this.props.comment.body,
+        author: this.props.comment.author
+      });
+    }
   }
 
   backHome(event) {
@@ -15,26 +30,26 @@ class commentForm extends Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
+		event.preventDefault();
+		const comment = this.props.comment;
 
-    let author = document.getElementsByName("author")[0].value;
-    let message = document.getElementsByName("message")[0].value;
+    //let author = document.getElementsByName("author")[0].value;
+    //let body = document.getElementsByName("body")[0].value;
 
-    let id = uuid();
-    let comment = {
-      id: id.split("-").join(""),
-      timestamp: Date.now(),
-      body: message,
-      author: author,
-      parentId: this.props.match.params.id,
-      deleted: false,
-      parentDeleted: false,
-      voteScore: 1
-    };
+		comment.body = this.state.body;
+		comment.timestamp = Date.now();
 
-    this.props.addComment(comment);
+		console.log(comment);
+
+    this.props.updateComment(comment);
     this.props.history.push("/");
   }
+
+  change = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
 
   render() {
     return (
@@ -55,6 +70,8 @@ class commentForm extends Component {
               <div className="field">
                 <p className="control is-expanded has-icons-left">
                   <input
+                    value={this.state.author}
+                    disabled
                     className="input"
                     type="text"
                     name="author"
@@ -76,8 +93,10 @@ class commentForm extends Component {
               <div className="field">
                 <div className="control">
                   <textarea
+                    value={this.state.body}
+                    onChange={e => this.change(e)}
                     className="textarea"
-                    name="message"
+                    name="body"
                     placeholder="Express yourself"
                   />
                 </div>
@@ -104,16 +123,18 @@ class commentForm extends Component {
   }
 }
 
-function mapStateToProps({ posts }) {
-  console.log(posts);
-  return {};
+function mapStateToProps({ comments }) {
+  //console.log(comments);
+  return {
+    comment: comments.editComment || []
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    addComment: comment => dispatch(addComment(comment))
-    //fetchPost: postID => dispatch(fetchPost(postID))
+    fetchComment: commentID => dispatch(fetchComment(commentID)),
+    updateComment: comment => dispatch(updateComment(comment))
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(commentForm);
+export default connect(mapStateToProps, mapDispatchToProps)(editCommentForm);

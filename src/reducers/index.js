@@ -7,6 +7,7 @@ import {
   UPDATE_POST,
   VOTE_POST,
   DELETE_POST,
+  FETCH_COMMENT,
   VOTE_COMMENT,
   ADD_COMMENT,
   DELETE_COMMENT,
@@ -66,7 +67,7 @@ function posts(state = {}, action) {
     case ADD_POST:
       return {
         ...state,
-        addedPost: action.newPost
+        //addedPost: action.newPost
       };
 
     case UPDATE_POST:
@@ -103,6 +104,11 @@ function posts(state = {}, action) {
 function comments(state = {}, action) {
   // console.log('comments',action)
   switch (action.type) {
+    case FETCH_COMMENT:
+      return {
+        editComment: action.comment
+      }
+    
     case VOTE_COMMENT:
       return {
         ...state,
@@ -112,7 +118,7 @@ function comments(state = {}, action) {
     case ADD_COMMENT:
       return {
         ...state,
-        addedComment: action.comment
+        //addedComment: action.comment
       };
 
     case DELETE_COMMENT:

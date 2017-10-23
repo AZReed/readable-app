@@ -14,7 +14,9 @@ const headers = {
 };
 
 export const fetchPosts = () =>
-  fetch(`${api}/posts`, { headers }).then(res => res.json());
+  fetch(`${api}/posts`, { headers })
+    .then(res => res.json())
+    .catch(error => error);
 
 export const fetchPost = postID =>
   fetch(`${api}/posts/${postID}`, {
@@ -45,9 +47,10 @@ export const updatePost = post =>
   fetch(`${api}/posts/${post.id}`, {
     method: "PUT",
     headers,
-    body: JSON.stringify({title: post.title, body: post.body})
+    body: JSON.stringify({ title: post.title, body: post.body })
   })
     .then(res => res.json())
+    .catch(error => error);
 
 export const votePost = (postID, status) =>
   fetch(`${api}/posts/${postID}`, {
@@ -70,7 +73,17 @@ export const fetchComments = postID =>
   fetch(`${api}/posts/${postID}/comments`, {
     method: "GET",
     headers
-  }).then(res => res.json());
+  })
+    .then(res => res.json())
+    .catch(error => error);
+
+export const fetchComment = commentID =>
+  fetch(`${api}/comments/${commentID}`, {
+    method: "GET",
+    headers
+  })
+    .then(res => res.json())
+    .catch(error => error);
 
 export const voteComment = (postID, status) =>
   fetch(`${api}/comments/${postID}`, {
@@ -85,7 +98,15 @@ export const addComment = comment =>
   fetch(`${api}/comments/`, {
     method: "POST",
     headers,
-    // body: JSON.stringify(comment)
+    body: JSON.stringify(comment)
+  })
+    .then(res => res.json())
+    .catch(error => error);
+
+export const updateComment = comment =>
+  fetch(`${api}/comments/${comment.id}`, {
+    method: "PUT",
+    headers,
     body: JSON.stringify(comment)
   })
     .then(res => res.json())
@@ -96,10 +117,7 @@ export const deleteComment = commentID =>
     method: "DELETE",
     headers
   })
-    .then(res => {
-      console.log(res);
-      return res.json();
-    })
+    .then(res => res.json())
     .catch(error => error);
 
 export const fetchCategories = () =>

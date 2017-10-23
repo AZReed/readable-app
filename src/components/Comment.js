@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import VoteScore from "./VoteScore";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class Comment extends Component {
   render() {
@@ -21,37 +22,22 @@ class Comment extends Component {
               {comment.body}
               <br />
               <small>
-                <a>Edit</a> · <a onClick={() => this.props.deleteComment(comment.id)}>Delete</a> · Posted by <strong>{comment.author} </strong> {handleTime(comment.timestamp)}
+                <Link to={`/editCommentForm/${comment.id}`}>Edit</Link> · {" "}
+                <a onClick={() => this.props.deleteComment(comment.id)}>
+                  Delete
+                </a>{" "}
+                · Posted by <strong>{comment.author} </strong>{" "}
+                {handleTime(comment.timestamp)}
               </small>
             </p>
           </div>
         </div>
       </article>
-      /*       <div>
-        <VoteScore
-          voteScore={comment.voteScore}
-          vote={voteComment}
-          id={comment.id}
-        />
-        <div>
-          <div>{comment.author}</div>
-          <div>
-            <span>Posted by {handleTime(comment.timestamp)}</span>
-          </div>
-          <div>
-            <p>{comment.body}</p>
-          </div>
-          <div>
-            <a>Reply</a>
-          </div>
-        </div>
-      </div> */
     );
   }
 }
 
 function mapStateToProps({ comments }, ownProps) {
-
   if (
     comments.updatedComment &&
     comments.updatedComment.id === ownProps.comment.id
@@ -65,4 +51,3 @@ function mapStateToProps({ comments }, ownProps) {
 }
 
 export default connect(mapStateToProps)(Comment);
-//export default Comment;
