@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Post from "./Post";
-import {
-  fetchPosts,
-  deletePost,
-  votePost,
-  fetchCategoryPosts
-} from "../actions";
+import { fetchPosts, fetchCategoryPosts } from "../actions";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 
@@ -30,21 +25,12 @@ class Posts extends Component {
     }
   }
 
-  delete = postID => {
-    this.props.deletePost(postID);
-  };
-
   render() {
     return (
       <div className="container">
         <Link to="/addPost">Add Post</Link>
         {this.props.posts.map((post, index) => (
-          <Post
-            key={post.id}
-            post={post}
-            delete={this.props.deletePost}
-            votePost={this.props.votePost}
-          />
+          <Post key={post.id} post={post} />
         ))}
       </div>
     );
@@ -64,19 +50,12 @@ function mapStateToProps({ posts, comments }, ownProps) {
     posts:
       (posts.allPosts && posts.allPosts.filter(post => !post.deleted)) || []
   };
-  /*   return {
-    posts:
-      posts.categoryPosts ||
-      (updatedPosts && updatedPosts.filter(post => !post.deleted)) ||
-      []
-  }; */
+
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     fetchPosts: () => dispatch(fetchPosts()),
-    deletePost: post => dispatch(deletePost(post)),
-    votePost: (postID, vote) => dispatch(votePost(postID, vote)),
     fetchCategoryPosts: category => dispatch(fetchCategoryPosts(category))
   };
 }

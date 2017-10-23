@@ -59,7 +59,7 @@ class postForm extends Component {
 
   backToPosts(event) {
     event.preventDefault();
-    this.props.history.push("/");
+    this.props.history.goBack();
   }
 
   change = event => {

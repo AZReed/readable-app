@@ -6,18 +6,25 @@ import addPostForm from "./addPostForm";
 import editPostForm from "./editPostForm";
 import commentForm from "./commentForm";
 import editCommentForm from "./editCommentForm";
+import Post from "./Post";
 import Home from "./Home";
 import { Route } from "react-router-dom";
 
 const App = () => {
   return (
     <section className="section">
-      <Route exact path="/" component={Home} />
-      <Route exact path="/editPost/:id" component={editPostForm} />
-      <Route exact path="/addPost" component={addPostForm} />
-      <Route exact path="/commentForm/:id" component={commentForm} />
-      <Route exact path="/editCommentForm/:id" component={editCommentForm} />
-      <Route exact path="/:category/posts" component={Home} />
+      <div className="container">
+        <h1 className="title">
+          Readable App
+        </h1>
+        <Route exact path="/" component={Home} />
+        <Route path="/posts/:category/:id" component={Post} />
+        <Route exact path="/editPost/:id" component={editPostForm} />
+        <Route exact path="/addPost" component={addPostForm} />
+        <Route exact path="/commentForm/:id" component={commentForm} />
+        <Route exact path="/editCommentForm/:id" component={editCommentForm} />
+        <Route exact path="/:category/posts" component={Home} />
+      </div>
     </section>
   );
 };
