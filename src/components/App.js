@@ -16,12 +16,11 @@ class App extends Component {
   componentDidMount() {
     console.log(this.props)
   }
-  
-  
+
   render() {
     return (
       <section className="section">
-        <nav className="level">
+        <nav className="level" id="header">
           <p className="level-item has-text-centered">
             <a className="link is-info" onClick={() => this.props.history.goBack()}>
               <i className="fa fa-chevron-left" aria-hidden="true" />
@@ -30,7 +29,7 @@ class App extends Component {
           <p className="level-item has-text-centered">
             <Link to="/" className="link is-info">Home</Link>
           </p>
-          <p className="level-item has-text-centered">Readable App</p>
+          <p className="level-item has-text-centered title">Readable App</p>
           <p className="level-item has-text-centered">
             <Link to="/addPost" className="link is-info">Add Post</Link>
           </p>
@@ -41,7 +40,7 @@ class App extends Component {
           </p>
         </nav>
 
-        <div className="container">
+        <div className="container" id="main">
           <Route exact path="/" component={Home} />
           <Route path="/posts/:category/:id" component={Post} />
           <Route exact path="/editPost/:id" component={editPostForm} />

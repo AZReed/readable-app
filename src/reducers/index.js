@@ -52,10 +52,9 @@ function posts(state = {}, action) {
       };
 
     case FETCH_CATEGORY_POSTS:
-      delete state.sortedPost;
+      //delete state.sortedPost;
+      //delete state.post;
       return {
-        ...state,
-        //categoryPosts: action.posts
         allPosts: action.posts
       };
 

@@ -3,7 +3,7 @@
 }
 
 a {
-  color: #7a7a7a;
+  color: hsl(217, 71%, 53%);
 }
 
 a.panel-block.is-active {
@@ -17,4 +17,26 @@ a.panel-block.is-active {
 
 .panel-block.is-active .panel-icon {
   color: hsl(217, 71%, 53%);
+}
+
+#header {
+  padding-top: 1rem;
+  background: #3675de;
+}
+
+#header p a {
+  color: white;
+}
+
+#header p {
+  color: white;
+}
+
+#main {
+  padding-bottom: 3rem;
+  padding-top: 1rem;
+}
+
+.footer {
+  padding: 1rem 1.5rem 1rem;
 }
