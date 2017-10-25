@@ -38,11 +38,12 @@ class Categories extends Component {
   }
 
   handleReset() {
+    this.props.clearSort()
     this.props.history.push("/");
   }
 
   handleResetSort(type) {
-    console.log(type);
+    console.log(type, this.props);
     this.props.clearSort()
   }
 

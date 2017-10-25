@@ -7,6 +7,7 @@ import {
   UPDATE_POST,
   VOTE_POST,
   DELETE_POST,
+  FETCH_COMMENTS,
   FETCH_COMMENT,
   VOTE_COMMENT,
   ADD_COMMENT,
@@ -47,11 +48,11 @@ function posts(state = {}, action) {
 
     case FETCH_POST:
       return {
-        ...state,
         post: action.post
       };
 
     case FETCH_CATEGORY_POSTS:
+      delete state.sortedPost;
       return {
         ...state,
         //categoryPosts: action.posts
@@ -83,15 +84,14 @@ function posts(state = {}, action) {
 
     case SORT_BY:
       //console.log(action);
-      //let posts = Object.assign({}, state.allPosts);
-      //console.log(posts)
+      let posts = Object.assign([], state.allPosts);
       return {
         ...state,
-        sortedPost: state.allPosts.sort((a, b) => b[action.arg] - a[action.arg])
+        sortedPost: posts.sort((a, b) => b[action.arg] - a[action.arg])
       };
 
     case CLEAR_SORT:
-      console.log(state);
+      delete state.sortedPost;
       return {
         ...state
       };
@@ -104,11 +104,16 @@ function posts(state = {}, action) {
 function comments(state = {}, action) {
   // console.log('comments',action)
   switch (action.type) {
+    case FETCH_COMMENTS:
+      return {
+        allComments: action.comments
+      }
+
     case FETCH_COMMENT:
       return {
         editComment: action.comment
       }
-    
+
     case VOTE_COMMENT:
       return {
         ...state,

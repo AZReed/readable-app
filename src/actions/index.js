@@ -37,9 +37,13 @@ export function fetchCategoryPosts(category) {
 export const FETCH_POST = "FETCH_POST";
 export function fetchPost(postID) {
   return dispatch => {
-    ReadableAPI.fetchPost(postID).then(post =>
-      dispatch({ type: FETCH_POST, post })
-    );
+    ReadableAPI.fetchPost(postID)
+    .then(post =>
+      ReadableAPI.fetchComments(post.id)
+        .then(comments => (post.comments = comments))
+        .then(() => post)
+    )
+    .then(post => dispatch({ type: FETCH_POST, post }));
   };
 }
 
@@ -75,6 +79,15 @@ export function deletePost(postID) {
   return dispatch => {
     ReadableAPI.deletePost(postID).then(post =>
       dispatch({ type: DELETE_POST, post })
+    );
+  };
+}
+
+export const FETCH_COMMENTS = "FETCH_COMMENTS";
+export function fetchComments(postID) {
+  return dispatch => {
+    ReadableAPI.fetchComments(postID).then(comments =>
+      dispatch({ type: FETCH_COMMENTS, comments })
     );
   };
 }

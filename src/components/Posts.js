@@ -1,13 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Post from "./Post";
-import {
-  fetchPosts,
-  deletePost,
-  votePost,
-  fetchCategoryPosts
-} from "../actions";
-import { Link } from "react-router-dom";
+import { fetchPosts, fetchCategoryPosts } from "../actions";
 import { withRouter } from "react-router";
 
 class Posts extends Component {
@@ -30,21 +24,11 @@ class Posts extends Component {
     }
   }
 
-  delete = postID => {
-    this.props.deletePost(postID);
-  };
-
   render() {
     return (
       <div className="container">
-        <Link to="/addPost">Add Post</Link>
         {this.props.posts.map((post, index) => (
-          <Post
-            key={post.id}
-            post={post}
-            delete={this.props.deletePost}
-            votePost={this.props.votePost}
-          />
+          <Post key={post.id} post={post} />
         ))}
       </div>
     );
@@ -53,6 +37,7 @@ class Posts extends Component {
 
 function mapStateToProps({ posts, comments }, ownProps) {
   //console.log(ownProps)
+
   posts.allPosts &&
     posts.allPosts.forEach(post => {
       if (posts.deletedPost && post.id === posts.deletedPost.id) {
@@ -62,21 +47,13 @@ function mapStateToProps({ posts, comments }, ownProps) {
 
   return {
     posts:
-      (posts.allPosts && posts.allPosts.filter(post => !post.deleted)) || []
+      posts.sortedPost || (posts.allPosts && posts.allPosts.filter(post => !post.deleted)) || []
   };
-  /*   return {
-    posts:
-      posts.categoryPosts ||
-      (updatedPosts && updatedPosts.filter(post => !post.deleted)) ||
-      []
-  }; */
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     fetchPosts: () => dispatch(fetchPosts()),
-    deletePost: post => dispatch(deletePost(post)),
-    votePost: (postID, vote) => dispatch(votePost(postID, vote)),
     fetchCategoryPosts: category => dispatch(fetchCategoryPosts(category))
   };
 }
