@@ -13,10 +13,6 @@ import { withRouter } from "react-router";
 
 class App extends Component {
 
-  componentDidMount() {
-    console.log(this.props)
-  }
-
   render() {
     return (
       <section className="section">
@@ -58,7 +54,7 @@ class App extends Component {
             <div className="content has-text-centered">
               <p>
                 <strong>Readable App</strong> by AZreed. The source code is
-                licensed
+                licensed {" "}
                 <a href="http://opensource.org/licenses/mit-license.php">
                   MIT
                 </a>. The website content is licensed{" "}

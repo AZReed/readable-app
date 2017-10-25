@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Post from "./Post";
 import { fetchPosts, fetchCategoryPosts } from "../actions";
 import { withRouter } from "react-router";
+import PropTypes from 'prop-types';
 
 class Posts extends Component {
   componentDidMount() {
@@ -34,6 +35,11 @@ class Posts extends Component {
     );
   }
 }
+
+Posts.PropTypes = {
+  posts: PropTypes.bool
+}
+
 
 function mapStateToProps({ posts, comments }, ownProps) {
   //console.log(ownProps)

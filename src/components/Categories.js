@@ -109,7 +109,7 @@ class Categories extends Component {
   render() {
     return (
       <nav className="panel">
-        <p className="panel-heading">Readable</p>
+        <p className="panel-heading">Filter & Sorting</p>
 
         <p className="panel-tabs">
           <a
