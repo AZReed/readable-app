@@ -16,7 +16,6 @@ class Post extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("updated postpost")
     if (this.props.post.id === undefined) {
       this.props.history.push("/")
     }
@@ -44,14 +43,14 @@ class Post extends Component {
         <div className="media-content">
           <div className="content">
             <p>
-              <Link to={`posts/${post.category}/${post.id}`}>
+              <Link to={`/posts/${post.category}/${post.id}`}>
                 <strong>{post.title}</strong>
               </Link>
               <br />
               {post.body}
               <br />
               <small>
-                <Link to={`/commentForm/${post.id}`}>Reply</Link> ·
+                <Link to={`/commentForm/${post.id}`}>Reply</Link> · {" "}
                 <Link to={`/editPost/${post.id}`}>Edit</Link> · {" "}
                 <a onClick={() => this.delete(post.id)}>Delete</a> · {" "}
                 Posted by <strong>{post.author}</strong>{" "}

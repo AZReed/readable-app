@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Post from "./Post";
 import { fetchPosts, fetchCategoryPosts } from "../actions";
-import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 
 class Posts extends Component {
@@ -28,7 +27,6 @@ class Posts extends Component {
   render() {
     return (
       <div className="container">
-        <Link to="/addPost">Add Post</Link>
         {this.props.posts.map((post, index) => (
           <Post key={post.id} post={post} />
         ))}
