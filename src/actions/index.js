@@ -1,6 +1,23 @@
 import * as ReadableAPI from "../utils/ReadableAPI";
+import {
+  FETCH_POSTS,
+  FETCH_CATEGORY_POSTS,
+  FETCH_POST,
+  ADD_POST,
+  UPDATE_POST,
+  VOTE_POST,
+  DELETE_POST,
+  FETCH_COMMENTS,
+  FETCH_COMMENT,
+  VOTE_COMMENT,
+  ADD_COMMENT,
+  UPDATE_COMMENT,
+  DELETE_COMMENT,
+  FETCH_CATEGORIES,
+  SORT_BY,
+  CLEAR_SORT
+} from "./actionTypes";
 
-export const FETCH_POSTS = "FETCH_POSTS";
 export function fetchPosts() {
   return dispatch => {
     ReadableAPI.fetchPosts()
@@ -17,7 +34,6 @@ export function fetchPosts() {
   };
 }
 
-export const FETCH_CATEGORY_POSTS = "FETCH_CATEGORY_POSTS";
 export function fetchCategoryPosts(category) {
   return dispatch => {
     ReadableAPI.fetchCategoryPosts(category)
@@ -34,20 +50,18 @@ export function fetchCategoryPosts(category) {
   };
 }
 
-export const FETCH_POST = "FETCH_POST";
 export function fetchPost(postID) {
   return dispatch => {
     ReadableAPI.fetchPost(postID)
-    .then(post =>
-      ReadableAPI.fetchComments(post.id)
-        .then(comments => (post.comments = comments))
-        .then(() => post)
-    )
-    .then(post => dispatch({ type: FETCH_POST, post }));
+      .then(post =>
+        ReadableAPI.fetchComments(post.id)
+          .then(comments => (post.comments = comments))
+          .then(() => post)
+      )
+      .then(post => dispatch({ type: FETCH_POST, post }));
   };
 }
 
-export const ADD_POST = "ADD_POST";
 export function addPost(post) {
   return dispatch => {
     ReadableAPI.addPost(post).then(newPost =>
@@ -56,7 +70,6 @@ export function addPost(post) {
   };
 }
 
-export const UPDATE_POST = "UPDATE_POST";
 export function updatePost(post) {
   return dispatch => {
     ReadableAPI.updatePost(post).then(updatedPost =>
@@ -65,7 +78,6 @@ export function updatePost(post) {
   };
 }
 
-export const VOTE_POST = "VOTE_POST";
 export function votePost(postID, vote) {
   return dispatch => {
     ReadableAPI.votePost(postID, vote).then(post =>
@@ -74,7 +86,6 @@ export function votePost(postID, vote) {
   };
 }
 
-export const DELETE_POST = "DELETE_POST";
 export function deletePost(postID) {
   return dispatch => {
     ReadableAPI.deletePost(postID).then(post =>
@@ -83,7 +94,6 @@ export function deletePost(postID) {
   };
 }
 
-export const FETCH_COMMENTS = "FETCH_COMMENTS";
 export function fetchComments(postID) {
   return dispatch => {
     ReadableAPI.fetchComments(postID).then(comments =>
@@ -92,7 +102,6 @@ export function fetchComments(postID) {
   };
 }
 
-export const FETCH_COMMENT = "FETCH_COMMENT";
 export function fetchComment(commentID) {
   return dispatch => {
     ReadableAPI.fetchComment(commentID).then(comment =>
@@ -101,7 +110,6 @@ export function fetchComment(commentID) {
   };
 }
 
-export const VOTE_COMMENT = "VOTE_COMMENT";
 export function voteComment(postID, vote) {
   return dispatch => {
     ReadableAPI.voteComment(postID, vote).then(comment =>
@@ -110,7 +118,6 @@ export function voteComment(postID, vote) {
   };
 }
 
-export const ADD_COMMENT = "ADD_COMMENT";
 export function addComment(comment) {
   return dispatch => {
     ReadableAPI.addComment(comment).then(comment =>
@@ -119,7 +126,6 @@ export function addComment(comment) {
   };
 }
 
-export const UPDATE_COMMENT = "UPDATE_COMMENT";
 export function updateComment(comment) {
   return dispatch => {
     ReadableAPI.updateComment(comment).then(comment =>
@@ -128,7 +134,6 @@ export function updateComment(comment) {
   };
 }
 
-export const DELETE_COMMENT = "DELETE_COMMENT";
 export function deleteComment(commentID) {
   return dispatch => {
     ReadableAPI.deleteComment(commentID).then(comment =>
@@ -137,7 +142,6 @@ export function deleteComment(commentID) {
   };
 }
 
-export const FETCH_CATEGORIES = "FETCH_CATEGORIES";
 export function fetchCategories() {
   return dispatch => {
     ReadableAPI.fetchCategories().then(categories =>
@@ -146,14 +150,12 @@ export function fetchCategories() {
   };
 }
 
-export const SORT_BY = "SORT_BY";
 export function sortBy(arg) {
   return dispatch => {
     dispatch({ type: SORT_BY, arg });
   };
 }
 
-export const CLEAR_SORT = "CLEAR_SORT";
 export function clearSort() {
   return dispatch => {
     dispatch({ type: CLEAR_SORT });

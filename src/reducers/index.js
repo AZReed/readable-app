@@ -15,7 +15,7 @@ import {
   FETCH_CATEGORIES,
   SORT_BY,
   CLEAR_SORT
-} from "../actions";
+} from "../actions/actionTypes";
 
 /* function operator(op) {
   switch (op) {
