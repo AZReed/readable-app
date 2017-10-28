@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchCategories, sortBy, clearSort } from "../actions";
+import * as actions from "../actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
@@ -143,14 +143,6 @@ function mapStateToProps({ categories }) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    fetchCategories: () => dispatch(fetchCategories()),
-    sortBy: arg => dispatch(sortBy(arg)),
-    clearSort: () => dispatch(clearSort())
-  };
-}
-
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Categories)
+  connect(mapStateToProps, actions)(Categories)
 );

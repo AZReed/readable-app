@@ -4,24 +4,23 @@ import Comments from "./Comments";
 import { connect } from "react-redux";
 import * as moment from "moment";
 import { Link } from "react-router-dom";
-import { fetchPost, deletePost, votePost } from "../actions";
+import * as actions from "../actions";
 
 class Post extends Component {
   componentDidMount() {
     if (this.props.match && this.props.match.params.id) {
-      let postID = this.props.match.params.id
+      let postID = this.props.match.params.id;
       this.props.fetchPost(postID);
     }
-    //console.log("mounted", this.props);
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.post.id === undefined) {
-      this.props.history.push("/")
+      this.props.history.push("/");
     }
   }
 
-  delete(postID){
+  delete(postID) {
     this.props.deletePost(postID);
     if (this.props.match.params.id) {
       this.props.history.push("/");
@@ -52,9 +51,9 @@ class Post extends Component {
               <small>
                 <Link to={`/commentForm/${post.id}`}>Reply</Link> · {" "}
                 <Link to={`/editPost/${post.id}`}>Edit</Link> · {" "}
-                <a onClick={() => this.delete(post.id)}>Delete</a> · {" "}
-                Posted by <strong>{post.author}</strong>{" "}
-                {this.handleTime(post.timestamp)} | {post.category}
+                <a onClick={() => this.delete(post.id)}>Delete</a> ·  Posted by{" "}
+                <strong>{post.author}</strong> {this.handleTime(post.timestamp)}{" "}
+                | {post.category}
               </small>
             </p>
           </div>
@@ -69,17 +68,19 @@ class Post extends Component {
 }
 
 function mapStateToProps({ posts, comments }, ownProps) {
-  //console.log("mapstateto single", posts, ownProps);
-  //console.log("mapState post", comments);
-
   if (posts.post) {
-    if (posts.updatedPost && (posts.updatedPost.id === posts.post.id)) {
-      posts.post.voteScore = posts.updatedPost.voteScore;
+    if (posts.updatedPost && posts.updatedPost.id === posts.post.id) {
+      /* posts.post.voteScore = posts.updatedPost.voteScore; */
+      return { post: Object.assign({}, posts.updatedPost) };
     }
     return { post: Object.assign({}, posts.post) };
   }
 
-  if ((ownProps.post && posts.updatedPost) && posts.updatedPost.id === ownProps.post.id) {
+  if (
+    ownProps.post &&
+    posts.updatedPost &&
+    posts.updatedPost.id === ownProps.post.id
+  ) {
     ownProps.post.voteScore = posts.updatedPost.voteScore;
   }
 
@@ -102,12 +103,4 @@ function mapStateToProps({ posts, comments }, ownProps) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    fetchPost: id => dispatch(fetchPost(id)),
-    deletePost: postID => dispatch(deletePost(postID)),
-    votePost: (postID, vote) => dispatch(votePost(postID, vote))
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Post);
+export default connect(mapStateToProps, actions)(Post);

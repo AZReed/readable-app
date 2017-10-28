@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchCategories, addPost, fetchPost, updatePost } from "../actions";
+import * as actions from "../actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import uuid from "uuid";
@@ -43,7 +43,6 @@ class postForm extends Component {
     let message = document.getElementsByName("message")[0].value;
 
     let post = {
-      //id: id.split("-").join(""),
       timestamp: Date.now(),
       title: title,
       body: message,
@@ -51,7 +50,6 @@ class postForm extends Component {
       category: category
     };
 
-    console.log(this.props.post);
     if (this.props.match.params.id !== "new") {
       this.props.updatePost(post);
     } else {
@@ -66,13 +64,6 @@ class postForm extends Component {
     //console.log(this.props.history.push("/"));
     this.props.history.push("/");
   }
-
-  /*   handleProps(attr) {
-    if (this.props.post) {
-      return this.props.post[attr];
-    }
-    return "";
-  } */
 
   render() {
     const { post } = this.props;
@@ -176,7 +167,6 @@ class postForm extends Component {
                 className="button is-text"
                 onClick={event => this.backToPosts(event)}
               >
-                {/* <Redirect></Redirect> */}
                 Cancel
               </button>
             </div>
@@ -188,7 +178,6 @@ class postForm extends Component {
 }
 
 function mapStateToProps({ posts, categories }, ownProps) {
-  //console.log(posts, ownProps.match.params.id)
 
   return {
     categories: categories || [],
@@ -196,13 +185,4 @@ function mapStateToProps({ posts, categories }, ownProps) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    fetchCategories: () => dispatch(fetchCategories()),
-    fetchPost: postID => dispatch(fetchPost(postID)),
-    addPost: post => dispatch(addPost(post)),
-    updatePost: post => dispatch(updatePost(post))
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(postForm);
+export default connect(mapStateToProps, actions)(postForm);

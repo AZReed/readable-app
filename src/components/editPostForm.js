@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchCategories, fetchPost, updatePost } from "../actions";
+import * as actions from "../actions";
 import { connect } from "react-redux";
 
 class postForm extends Component {
@@ -15,17 +15,21 @@ class postForm extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.body === "" && this.props.post.id) {
-      this.setState({ 
+      this.setState({
         body: this.props.post.body,
         title: this.props.post.title
-       });
+      });
     }
   }
 
   categories() {
     if (this.props.categories.allCategories) {
       return (
-        <select value={this.props.post.category} disabled={true} name="categories">
+        <select
+          value={this.props.post.category}
+          disabled={true}
+          name="categories"
+        >
           {this.props.categories.allCategories.map(category => (
             <option key={category.name} value={category.name}>
               {category.name}
@@ -78,7 +82,7 @@ class postForm extends Component {
             </div>
           </div>
         </section>
-{/* 
+        {/* 
         <nav className="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
           <ul>
             <li><a href="/">Readable App</a></li>
@@ -86,7 +90,7 @@ class postForm extends Component {
             <li>{this.props.post.id}</li>
           </ul>
         </nav> */}
-        
+
         <form onSubmit={event => this.handleSubmit(event)}>
           <div className="field is-horizontal">
             <div className="field-label is-normal">
@@ -118,9 +122,7 @@ class postForm extends Component {
             <div className="field-body">
               <div className="field is-narrow">
                 <div className="control">
-                  <div className="select is-fullwidth">
-                    {this.categories()}
-                  </div>
+                  <div className="select is-fullwidth">{this.categories()}</div>
                 </div>
               </div>
             </div>
@@ -137,7 +139,7 @@ class postForm extends Component {
                     className="input"
                     type="text"
                     name="title"
-                    onChange={(e) => this.change(e)}
+                    onChange={e => this.change(e)}
                     value={this.state.title}
                     placeholder="Title"
                   />
@@ -178,7 +180,7 @@ class postForm extends Component {
               </button>
             </div>
           </div>
-          <input hidden value={this.props.post.id} name="id"/>
+          <input hidden value={this.props.post.id} name="id" />
         </form>
       </div>
     );
@@ -186,7 +188,6 @@ class postForm extends Component {
 }
 
 function mapStateToProps({ posts, categories }, ownProps) {
-  //console.log(posts, ownProps.match.params.id)
 
   return {
     categories: categories || [],
@@ -194,12 +195,4 @@ function mapStateToProps({ posts, categories }, ownProps) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    fetchCategories: () => dispatch(fetchCategories()),
-    fetchPost: postID => dispatch(fetchPost(postID)),
-    updatePost: post => dispatch(updatePost(post))
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(postForm);
+export default connect(mapStateToProps, actions)(postForm);

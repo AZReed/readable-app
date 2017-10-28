@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Post from "./Post";
-import { fetchPosts, fetchCategoryPosts } from "../actions";
+import * as actions from "../actions";
 import { withRouter } from "react-router";
 
 class Posts extends Component {
@@ -36,7 +36,6 @@ class Posts extends Component {
 }
 
 function mapStateToProps({ posts, comments }, ownProps) {
-  //console.log(ownProps)
 
   posts.allPosts &&
     posts.allPosts.forEach(post => {
@@ -51,11 +50,4 @@ function mapStateToProps({ posts, comments }, ownProps) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    fetchPosts: () => dispatch(fetchPosts()),
-    fetchCategoryPosts: category => dispatch(fetchCategoryPosts(category))
-  };
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Posts));
+export default withRouter(connect(mapStateToProps, actions)(Posts));

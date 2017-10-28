@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-//import { fetchPost, addComment } from "../actions";
-import { updateComment, fetchComment } from "../actions";
+import * as actions from "../actions";
 import { connect } from "react-redux";
-//import uuid from "uuid";
 
 class editCommentForm extends Component {
   state = {
@@ -15,7 +13,6 @@ class editCommentForm extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.props);
     if (this.state.body === "" && this.props.comment.id) {
       this.setState({
         body: this.props.comment.body,
@@ -33,13 +30,8 @@ class editCommentForm extends Component {
 		event.preventDefault();
 		const comment = this.props.comment;
 
-    //let author = document.getElementsByName("author")[0].value;
-    //let body = document.getElementsByName("body")[0].value;
-
 		comment.body = this.state.body;
 		comment.timestamp = Date.now();
-
-		console.log(comment);
 
     this.props.updateComment(comment);
     this.props.history.push("/");
@@ -124,17 +116,9 @@ class editCommentForm extends Component {
 }
 
 function mapStateToProps({ comments }) {
-  //console.log(comments);
   return {
     comment: comments.editComment || []
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    fetchComment: commentID => dispatch(fetchComment(commentID)),
-    updateComment: comment => dispatch(updateComment(comment))
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(editCommentForm);
+export default connect(mapStateToProps, actions)(editCommentForm);

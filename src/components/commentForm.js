@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-//import { fetchPost, addComment } from "../actions";
-import { addComment } from "../actions";
+import * as actions from "../actions";
 import { connect } from "react-redux";
 import uuid from "uuid";
 
@@ -104,16 +103,4 @@ class commentForm extends Component {
   }
 }
 
-function mapStateToProps({ posts }) {
-  console.log(posts);
-  return {};
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    addComment: comment => dispatch(addComment(comment))
-    //fetchPost: postID => dispatch(fetchPost(postID))
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(commentForm);
+export default connect(null, actions)(commentForm);

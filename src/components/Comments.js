@@ -1,6 +1,6 @@
 import React from "react";
 import Comment from "./Comment";
-import { voteComment, deleteComment } from "../actions";
+import * as actions from "../actions";
 import { connect } from "react-redux";
 
 const Comments = props => {
@@ -20,23 +20,10 @@ const Comments = props => {
 };
 
 function mapStateToProps({ posts }, ownProps) {
-  //console.log(ownProps.post);
-
-/*   ownProps.post.comments = ownProps.post.comments.filter(comment => {
-    return !comment.delete
-  }) */
-
   return {
     comments: ownProps.post.comments || []
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    voteComment: (postID, vote) => dispatch(voteComment(postID, vote)),
-    deleteComment: commentID => dispatch(deleteComment(commentID))
-  };
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Comments);
-//export default Comments;
+export default connect(mapStateToProps, actions)(Comments);

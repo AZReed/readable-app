@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchCategories, addPost } from "../actions";
+import * as actions from "../actions";
 import { connect } from "react-redux";
 import uuid from "uuid";
 
@@ -149,18 +149,9 @@ class addPostForm extends Component {
 }
 
 function mapStateToProps({ posts, categories }, ownProps) {
-  //console.log(posts, ownProps.match.params.id)
-
   return {
     categories: categories || []
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    fetchCategories: () => dispatch(fetchCategories()),
-    addPost: post => dispatch(addPost(post))
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(addPostForm);
+export default connect(mapStateToProps, actions)(addPostForm);

@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-//import Posts from "./Posts";
-//import Categories from "./Categories";
-//import postForm from "./postForm";
 import addPostForm from "./addPostForm";
 import editPostForm from "./editPostForm";
 import commentForm from "./commentForm";

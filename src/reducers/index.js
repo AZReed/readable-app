@@ -52,13 +52,14 @@ function posts(state = {}, action) {
       };
 
     case FETCH_CATEGORY_POSTS:
-      //delete state.sortedPost;
-      //delete state.post;
       return {
         allPosts: action.posts
       };
 
     case VOTE_POST:
+      if (state.post) {
+        action.post.comments = state.post.comments;
+      }
       return {
         ...state,
         updatedPost: action.post
