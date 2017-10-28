@@ -16,7 +16,7 @@ class Post extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.post.id === undefined) {
-      this.props.history.push("/");
+      this.props.history.push("/404");
     }
   }
 

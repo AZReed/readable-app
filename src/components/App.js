@@ -5,6 +5,7 @@ import commentForm from "./commentForm";
 import editCommentForm from "./editCommentForm";
 import Post from "./Post";
 import Home from "./Home";
+import notFound from "./notFound";
 import { Route, Link } from "react-router-dom";
 import { withRouter } from "react-router";
 
@@ -45,6 +46,7 @@ class App extends Component {
             component={editCommentForm}
           />
           <Route exact path="/:category/posts" component={Home} />
+          <Route exact path="/404" component={notFound} />
         </div>
         <footer className="footer">
           <div className="container">
