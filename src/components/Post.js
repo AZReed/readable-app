@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import * as moment from "moment";
 import { Link } from "react-router-dom";
 import * as actions from "../actions";
+import { withRouter } from "react-router";
 
 class Post extends Component {
   componentDidMount() {
@@ -16,7 +17,7 @@ class Post extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.post.id === undefined) {
-      this.props.history.push("/");
+      this.props.history.push("/404");
     }
   }
 
@@ -51,8 +52,9 @@ class Post extends Component {
               <small>
                 <Link to={`/commentForm/${post.id}`}>Reply</Link> · {" "}
                 <Link to={`/editPost/${post.id}`}>Edit</Link> · {" "}
-                <a onClick={() => this.delete(post.id)}>Delete</a> ·  Posted by{" "}
+                <a onClick={() => this.delete(post.id)}>Delete</a> · Posted by{" "}
                 <strong>{post.author}</strong> {this.handleTime(post.timestamp)}{" "}
+                | ({post.comments.length || 0}) comments
                 | {post.category}
               </small>
             </p>
@@ -103,4 +105,4 @@ function mapStateToProps({ posts, comments }, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, actions)(Post);
+export default withRouter(connect(mapStateToProps, actions)(Post));
