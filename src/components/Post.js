@@ -54,7 +54,7 @@ class Post extends Component {
                 <Link to={`/editPost/${post.id}`}>Edit</Link> · {" "}
                 <a onClick={() => this.delete(post.id)}>Delete</a> · Posted by{" "}
                 <strong>{post.author}</strong> {this.handleTime(post.timestamp)}{" "}
-                | ({post.comments.length || 0}) comments
+                | ({post.comments ? post.comments.length : 0}) comments
                 | {post.category}
               </small>
             </p>
