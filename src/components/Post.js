@@ -72,8 +72,7 @@ class Post extends Component {
 function mapStateToProps({ posts, comments }, ownProps) {
   if (posts.post) {
     if (posts.updatedPost && posts.updatedPost.id === posts.post.id) {
-      /* posts.post.voteScore = posts.updatedPost.voteScore; */
-      return { post: Object.assign({}, posts.updatedPost) };
+      posts.post.voteScore = posts.updatedPost.voteScore;
     }
     return { post: Object.assign({}, posts.post) };
   }
