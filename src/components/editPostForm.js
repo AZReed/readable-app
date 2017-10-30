@@ -82,14 +82,6 @@ class postForm extends Component {
             </div>
           </div>
         </section>
-        {/* 
-        <nav className="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
-          <ul>
-            <li><a href="/">Readable App</a></li>
-            <li>Edit Post</li>
-            <li>{this.props.post.id}</li>
-          </ul>
-        </nav> */}
 
         <form onSubmit={event => this.handleSubmit(event)}>
           <div className="field is-horizontal">

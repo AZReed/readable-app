@@ -8,12 +8,6 @@ class Posts extends Component {
   componentDidMount() {
     const category = this.props.match.params.category;
     category && category.length > 0 ? this.props.fetchCategoryPosts(category) : this.props.fetchPosts();
-
-/*     if (category && category.length > 0) {
-      this.props.fetchCategoryPosts(category);
-    } else {
-      this.props.fetchPosts();
-    } */
   }
 
   componentDidUpdate(prevProps, prevState) {
