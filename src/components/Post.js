@@ -74,6 +74,21 @@ function mapStateToProps({ posts, comments }, ownProps) {
     if (posts.updatedPost && posts.updatedPost.id === posts.post.id) {
       posts.post.voteScore = posts.updatedPost.voteScore;
     }
+
+    if (
+      comments.deletedComment &&
+      comments.deletedComment.parentId === posts.post.id
+    ) {
+      if (posts.post.comments.length > 0) {
+        posts.post.comments = posts.post.comments.filter(comment => {
+          if (comment.id === comments.deletedComment.id) {
+            return false;
+          }
+          return true;
+        });
+      }
+    }
+    
     return { post: Object.assign({}, posts.post) };
   }
 
