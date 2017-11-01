@@ -31,7 +31,6 @@ function comments(state = {}, action) {
 
     case DELETE_COMMENT:
       return {
-        ...state,
         deletedComment: action.comment
       };
 

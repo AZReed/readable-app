@@ -54,8 +54,8 @@ class Post extends Component {
                 <Link to={`/editPost/${post.id}`}>Edit</Link> · {" "}
                 <a onClick={() => this.delete(post.id)}>Delete</a> · Posted by{" "}
                 <strong>{post.author}</strong> {this.handleTime(post.timestamp)}{" "}
-                | ({post.comments ? post.comments.length : 0}) comments
-                | {post.category}
+                | ({post.comments ? post.comments.length : 0}) comments |{" "}
+                {post.category}
               </small>
             </p>
           </div>
@@ -70,6 +70,7 @@ class Post extends Component {
 }
 
 function mapStateToProps({ posts, comments }, ownProps) {
+  /* when a single post is shown*/
   if (posts.post) {
     if (posts.updatedPost && posts.updatedPost.id === posts.post.id) {
       posts.post.voteScore = posts.updatedPost.voteScore;
@@ -88,10 +89,11 @@ function mapStateToProps({ posts, comments }, ownProps) {
         });
       }
     }
-    
+
     return { post: Object.assign({}, posts.post) };
   }
 
+  /*when all posts are shown*/
   if (
     ownProps.post &&
     posts.updatedPost &&
@@ -102,6 +104,7 @@ function mapStateToProps({ posts, comments }, ownProps) {
 
   if (
     comments.deletedComment &&
+    ownProps.post &&
     comments.deletedComment.parentId === ownProps.post.id
   ) {
     if (ownProps.post.comments.length > 0) {
