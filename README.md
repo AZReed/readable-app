@@ -16,6 +16,8 @@ npm install
 npm start
 ```
 
+You may need to change the port in the ReadableAPI.js first line, depending on what port the server runs (3001, 5001 ...).
+There is more info in Aknowledgments sections about the local server
 
 ## Built With
 
