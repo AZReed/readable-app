@@ -17,14 +17,15 @@ npm start
 ```
 
 You may need to change the port in ReadableAPI.js first line, depending on what port the server runs (3001, 5001 ...).
-There is more info in Aknowledgments sections about the local server
+There is more info in Aknowledgments sections about the local server.
+
 
 ## Built With
 
 * [Node.js](https://nodejs.org/en/) - Node
 * [React.js](https://facebook.github.io/react/) - React framework
 * [create-react-app](https://github.com/facebookincubator/create-react-app) - A React ready to go basic configuration
-* [Redux](http://redux.js.org/) - The Redux pattern.
+* [Redux](http://redux.js.org/) - The Redux pattern
 
 
 ## Authors
